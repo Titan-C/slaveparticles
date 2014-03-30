@@ -102,10 +102,6 @@ The Hamiltonian in this case when there is no Hund coupling($J=0$) and in a latt
     + \sum_{im\sigma}(\epsilon_m - \mu)d^\dagger_{im\sigma}d_{im\sigma}
     + \frac{U}{2} \sum_i \left( \sum_{m\sigma} d_{im\sigma}^\dagger d_{im\sigma} - N \right)^2
 
-The focus now for simplicity is the case of zero crystal-field splitting
-$\epsilon_m=0$ and half-filling of each band one electron per site in each
-orbital $\mu=0$.
-
 Then when dealing with a multi orbital system, $2N$  new spin-$1/2$ variables,
 $S^z_{m\sigma}$ and $2N$ auxiliary fermions $f_{m\sigma}$ are introduced, where
 $m=1, \cdots, N$ is the number of orbitals. And the local constrain is applied
@@ -119,7 +115,7 @@ using the Lagrange multiplier $\lambda_{im\sigma}$.
 When rewriting the Hamiltonian in terms of the auxiliary fermions and the slave
 spins the interaction term turn easily into:
 
-.. math:: \mathcal{H}_{int} = \sum_i \left( \sum_{m\sigma} S^z_{im\sigma} \right)^2
+.. math:: \mathcal{H}_{int} = \frac{U}{2}\ sum_i \left( \sum_{m\sigma} S^z_{im\sigma} \right)^2
 
 For the non interacting part, an appropriate representation of the creation
 operator has to be chosen. The direct possibility $d^\dagger \rightarrow S^+ f^\dagger$,
@@ -131,4 +127,39 @@ Hamiltonian reads:
 
 .. math::
    \mathcal{H}_0 = -\sum_m t_m \sum_{<i,j>, \sigma} 4S^x_{im\sigma}S^x_{jm\sigma}(f^\dagger_{im\sigma}f_{jm\sigma} +h.c.)
-    + \sum_{im\sigma}(\epsilon_m - \mu)f^\dagger_{im\sigma}f_{im\sigma}
+   + \sum_{im\sigma}(\epsilon_m - \mu)f^\dagger_{im\sigma}f_{im\sigma}
+
+The focus now for simplicity is the case of zero crystal-field splitting
+$\epsilon_m=0$ and half-filling of each band one electron per site in each
+orbital $\mu=0$. The constrain is treated on average using a static and
+site independent Lagrange multiplier $\lambda_m$. Then the Hamiltonian reads:
+
+.. math:: \mathcal{H} = &\frac{U}{2} \sum_i \left( \sum_{m\sigma} S^z_{im\sigma} \right)^2 \\
+   &-\sum_m t_m \sum_{<i,j>, \sigma} 4S^x_{im\sigma}S^x_{jm\sigma}(f^\dagger_{im\sigma}f_{jm\sigma} +h.c.) \\
+   &+\sum_{im\sigma} \lambda_m \left( S_{im\sigma}^z + \frac{1}{2} - f_{im\sigma}^\dagger f_{im\sigma} \right)
+
+Using a mean field approach in which operators are treated in a Hartree-Fock
+approximation it is possible to decouple the Hamiltonian into two effective ones:
+
+.. math:: \mathcal{H}^f_{eff} = &-\sum_m t_m^{eff} \sum_{<i,j>, \sigma} (f^\dagger_{im\sigma}f_{jm\sigma} +h.c.) \\
+   &-\sum_{im\sigma} \lambda_m f_{im\sigma}^\dagger f_{im\sigma}
+   :label: hamileff_fermion
+.. math:: \mathcal{H}^S_{eff} = &-\sum_m 4J^{eff}_m \sum_{<i,j>, \sigma} S^x_{im\sigma}S^x_{jm\sigma} \\
+   &+\sum_{im\sigma} \lambda_m \left( S_{im\sigma}^z + \frac{1}{2} \right)
+   +\frac{U}{2} \sum_i \left( \sum_{m\sigma} S^z_{im\sigma} \right)^2
+   :label: hamileff_spin
+
+Where the effective hopping and the effective exchange constants are determined
+self consistently from:
+
+.. math::
+   t^{eff}_m &= 4t_m<S^x_{im\sigma}S^x_{jm\sigma}>
+   :label: eff_hopping
+.. math::
+   J^{eff}_m &= t_m<f^\dagger_{im\sigma}f_{jm\sigma} +h.c.>
+   :label: eff_exchange
+
+
+
+
+
