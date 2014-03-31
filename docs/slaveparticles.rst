@@ -69,7 +69,7 @@ This separates in 2 Hamiltonians:
                     +\lambda \sum_{n} (S_n^z + \frac{1}{2})
 
 The spin Hamiltonian has a spectrum :math:`E_{Q \leftarrow S+1/2} = U/2(Q-N)^2 +\lambda Q`,
-where $Q$ is the present charge. To find the Lagrange multiplier $\lambda$ take
+where $Q$ is the charge present. To find the Lagrange multiplier $\lambda$ take
 $0=\frac{\partial <\mathcal{H}>}{\partial \lambda}$ because restrictions are treated always in average.
 
 .. math::
@@ -102,7 +102,7 @@ The Hamiltonian in this case when there is no Hund coupling($J=0$) and in a latt
     + \sum_{im\sigma}(\epsilon_m - \mu)d^\dagger_{im\sigma}d_{im\sigma}
     + \frac{U}{2} \sum_i \left( \sum_{m\sigma} d_{im\sigma}^\dagger d_{im\sigma} - N \right)^2
 
-Then when dealing with a multi orbital system, $2N$  new spin-$1/2$ variables,
+Then when dealing with a multi orbital system, $2N$  new spin-$1/2$ variables
 $S^z_{m\sigma}$ and $2N$ auxiliary fermions $f_{m\sigma}$ are introduced, where
 $m=1, \cdots, N$ is the number of orbitals. And the local constrain is applied
 on each lattice site($i$):
@@ -115,14 +115,14 @@ using the Lagrange multiplier $\lambda_{im\sigma}$.
 When rewriting the Hamiltonian in terms of the auxiliary fermions and the slave
 spins the interaction term turn easily into:
 
-.. math:: \mathcal{H}_{int} = \frac{U}{2}\ sum_i \left( \sum_{m\sigma} S^z_{im\sigma} \right)^2
+.. math:: \mathcal{H}_{int} = \frac{U}{2} \sum_i \left( \sum_{m\sigma} S^z_{im\sigma} \right)^2
 
 For the non interacting part, an appropriate representation of the creation
 operator has to be chosen. The direct possibility $d^\dagger \rightarrow S^+ f^\dagger$,
 although correct leads to problems with the spectral weight conservation because
 $S^+$ and $S^-$ don't commute. Instead the representation $d^\dagger \rightarrow
-2S^xf^\dagger$, $d \rightarrow 2S^xf$, which is identical on the physical Hilbert
-space and involves commuting slave spin operators in chosen. Then the non interacting
+2S^xf^\dagger$ and $d \rightarrow 2S^xf$ is chosen, which is identical on the physical Hilbert
+space and involves commuting slave spin operators. Then the non interacting
 Hamiltonian reads:
 
 .. math::
@@ -159,7 +159,37 @@ self consistently from:
    J^{eff}_m &= t_m<f^\dagger_{im\sigma}f_{jm\sigma} +h.c.>
    :label: eff_exchange
 
+The fermion field hamiltonian is a non-interacting one. For the slave spin
+hamiltonian, it can be treated in a single-site mean field approximation.
 
+.. math:: \mathcal{H}_s = &\sum_{m\sigma} 2h_mS^x_{m\sigma}
+   +\sum_{m\sigma} \lambda_m \left( S_{im\sigma}^z + \frac{1}{2} \right)
+   +\frac{U}{2} \left( \sum_{m\sigma} S^z_{m\sigma} \right)^2
+   :label: hamil_spin_meanfield
+
+Here the mean field $h_m$ has to be determined self-consistently from:
+
+.. math:: h_m = -2zJ^{eff}_m<S^x_{m\sigma}> = 4<S^x_{m\sigma}>\frac{1}{N_s}\sum_k \epsilon_{km}<f^\dagger_{km\sigma}f_{km\sigma}>
+
+but can't trust this equation, where $\epsilon_{km}=-t_m/(z?)\sum_{i,nn(j)}e^{\vec{k}(\vec{i}-\vec{j})}$
+
+The effective fermion hamiltonian is
+
+.. math:: \mathcal{H}^f_{eff} = &\sum_{km\sigma} (-t_m^{eff} \sum_{a} e^{i\vec{k}\cdot\vec{a}} - \lambda_m) f^\dagger_{km\sigma}f_{km\sigma} \\
+   &\sum_{km\sigma} (Z_m\epsilon_{mk} - \lambda_m) f^\dagger_{km\sigma}f_{km\sigma}
+
+where $Z_m=4<S^x_{im\sigma}>^2$ is the quasiparticle weight.
+
+In the ordered spin basis $\{\ket{\uparrow\uparrow}, \ket{\uparrow\downarrow}, \ket{\downarrow\uparrow}, \ket{\uparrow\downarrow}\}$ the operators are then
+
+.. math::
+   S^z_{\uparrow} = \frac{1}{2} \left[\begin{smallmatrix}1 & 0 & 0 & 0\\0 & 1 & 0 & 0\\0 & 0 & -1 & 0\\0 & 0 & 0 & -1\end{smallmatrix}\right]
+.. math::
+   S^z_{\downarrow} = \frac{1}{2} \left[\begin{smallmatrix}1 & 0 & 0 & 0\\0 & -1 & 0 & 0\\0 & 0 & 1 & 0\\0 & 0 & 0 & -1\end{smallmatrix}\right]
+.. math::
+   S^x_{\uparrow} = \frac{1}{2} \left[\begin{smallmatrix}0 & 0 & 1 & 0\\0 & 0 & 0 & 1\\1 & 0 & 0 & 0\\0 & 1 & 0 & 0\end{smallmatrix}\right]
+.. math::
+   S^x_{\downarrow} = \frac{1}{2} \left[\begin{smallmatrix}0 & 1 & 0 & 0\\1 & 0 & 0 & 0\\0 & 0 & 0 & 1\\0 & 0 & 1 & 0\end{smallmatrix}\right]
 
 
 
