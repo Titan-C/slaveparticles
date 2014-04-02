@@ -74,8 +74,8 @@ $0=\frac{\partial <\mathcal{H}>}{\partial \lambda}$ because restrictions are tre
 
 .. math::
    0 &=-\sum_{n} < f_n^\dagger f_n>_f + \sum_{n} <S_n^z>_s \\
-   2Nn_F(\lambda +\mu) &= 2N<S_n^z + \frac{1}{2}> = <S^z> + N = <Q> \\
-   2Nn_F(\lambda +\mu) &=
+   2Nn_F(-\lambda -\mu) &= 2N<S_n^z + \frac{1}{2}> = <S^z> + N = <Q> \\
+   2Nn_F(-\lambda -\mu) &=
    \mathcal{Z}^{-1} \sum_{Q=0}^{2N} \binom{2N}{Q} Q e^{\beta(U/2(Q-N)^2 +\lambda Q)}
 
 
@@ -84,7 +84,7 @@ distribution and the Grand Canonical Partition function is
 $\mathcal{Z}^{-1} \sum_{Q=0}^{2N} \binom{2N}{Q} Q e^{\beta(U/2(Q-N)^2 +\lambda Q)}$.
 Then by numerical root finding the
 multiplier $\bar{\lambda}(\mu,\beta)$ allows for to describe the mean fermion occupation,
-which is $2Nn_F(\mu + \bar{\lambda}(\mu,\beta))$ and can recuperate the complete Coulomb ladder. It
+which is $2Nn_F(-\mu - \bar{\lambda}(\mu,\beta))$ and can recuperate the complete Coulomb ladder. It
 then has to be compared to the exact solution:
 
 .. math::
@@ -171,11 +171,12 @@ Here the mean field $h_m$ has to be determined self-consistently from:
 
 .. math:: h_m = -2zJ^{eff}_m<S^x_{m\sigma}> = 4<S^x_{m\sigma}>\frac{1}{N_s}\sum_k \epsilon_{km}<f^\dagger_{km\sigma}f_{km\sigma}>
 
-but can't trust this equation, where $\epsilon_{km}=-t_m/(z?)\sum_{i,nn(j)}e^{\vec{k}(\vec{i}-\vec{j})}$
+where $z$ is the coordination number, $\epsilon_{km}=-t_m\sum_{\{\vec{a}\}}e^{\vec{k}\cdot\vec{a}}$
+with $\{\vec{a}\}$ the set of vectors to the nearest neighbors
 
 The effective fermion hamiltonian is
 
-.. math:: \mathcal{H}^f_{eff} = &\sum_{km\sigma} (-t_m^{eff} \sum_{a} e^{i\vec{k}\cdot\vec{a}} - \lambda_m) f^\dagger_{km\sigma}f_{km\sigma} \\
+.. math:: \mathcal{H}^f_{eff} = &\sum_{km\sigma} (-t_m^{eff} \sum_{\{\vec{a}\}} e^{i\vec{k}\cdot\vec{a}} - \lambda_m) f^\dagger_{km\sigma}f_{km\sigma} \\
    &\sum_{km\sigma} (Z_m\epsilon_{mk} - \lambda_m) f^\dagger_{km\sigma}f_{km\sigma}
 
 where $Z_m=4<S^x_{im\sigma}>^2$ is the quasiparticle weight.
