@@ -194,17 +194,7 @@ In the ordered spin basis $\{\ket{\uparrow\uparrow}, \ket{\uparrow\downarrow}, \
 
 .. plot::
 
-   from pylab import linspace, exp, sum, zeros
-   from pylab import plot, xlabel, ylabel, title, legend
-   import spinorbit as so
-
-   interaction = linspace(0, 4, 100)
-   sl = so.SlaveSpin(1000, 0, 0.5, 1)
-   h = -1.
-   Z = []
-   for u in interaction:
-       sl.U = u
-       sl.selfconsistency(h)
-       h = sl.mean_field(0)
-       Z.append(sl.quasiparticle_weight())
-   plot(interaction, Z)
+   from spinorbit.plotter import plot_quasiparticle_weight
+   plot_quasiparticle_weight()
+   import matplotlib.pyplot as plt
+   plt.show()
