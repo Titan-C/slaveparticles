@@ -192,5 +192,19 @@ In the ordered spin basis $\{\ket{\uparrow\uparrow}, \ket{\uparrow\downarrow}, \
 .. math::
    S^x_{\downarrow} = \frac{1}{2} \left[\begin{smallmatrix}0 & 1 & 0 & 0\\1 & 0 & 0 & 0\\0 & 0 & 0 & 1\\0 & 0 & 1 & 0\end{smallmatrix}\right]
 
+.. plot::
 
+   from pylab import linspace, exp, sum, zeros
+   from pylab import plot, xlabel, ylabel, title, legend
+   import spinorbit as so
 
+   interaction = linspace(0, 4, 100)
+   sl = so.SlaveSpin(1000, 0, 0.5, 1)
+   h = -1.
+   Z = []
+   for u in interaction:
+       sl.U = u
+       sl.selfconsistency(h)
+       h = sl.mean_field(0)
+       Z.append(sl.quasiparticle_weight())
+   plot(interaction, Z)
