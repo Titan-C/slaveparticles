@@ -31,8 +31,9 @@ And the constrain eliminates the unphysical states
    \ket{n_f=0,S^z = +1/2}
 
 It is important to note that the spin-$1/2$ variable has nothing to do with the
-actual spin of the particle. Spins are treated independently and the spin-$1/2$
-variable is just to give the presence of the particle. To exemplify this, the
+actual spin of the particle, it is only a label. The slave spin-$1/2$
+variable is introduced for every fermion species to give the presence of the particle,
+as such slave spins are also labeled with a spin index, $S^z_{\sigma}$. To exemplify this, the
 orbital base $\{\ket{\emptyset}, \ket{\uparrow}, \ket{\downarrow}, \ket{\uparrow
 \downarrow}\}$ is written in this extended Hilbert space as:
 
@@ -42,18 +43,23 @@ orbital base $\{\ket{\emptyset}, \ket{\uparrow}, \ket{\downarrow}, \ket{\uparrow
    \ket{\downarrow} &= \ket{n_f = 0; S^z_\uparrow = -1/2}\ket{n_f = 1; S^z_\downarrow = 1/2} \\
    \ket{\uparrow\downarrow} &= \ket{n_f = 1; S^z_\uparrow = 1/2}\ket{n_f = 1; S^z_\downarrow = 1/2}
 
-The isolated atom
-'''''''''''''''''
+Then when dealing with a multi orbital system, $2N$  new spin-$1/2$ variables
+$S^z_{m\sigma}$ and $2N$ auxiliary fermions $f_{m\sigma}$ are introduced, where
+$m=1, \cdots, N$ is the number of orbitals.
 
-The Hamiltonian for the isolated atom, with degenerated $2N$ fermions in spin
-and orbital reads:
+Case: The isolated atom
+'''''''''''''''''''''''
+
+The Hamiltonian for the isolated atom, with $2N$ degenerated fermions in spin
+and orbital in particle-hole symmetry formulation, reads:
 
 .. math::
    \mathcal{H} = \frac{U}{2} \left( \sum_{n} d_n^\dagger d_n - N \right)^2
     -\mu \sum_{n} d_n^\dagger d_n
 
-When introducing the new operators in this Hamiltonian the Lagrange multipliers
-are also included to account for the restriction :eq:`slavespinrestriction` to
+When introducing the new operators in this Hamiltonian a Lagrange multiplier
+$\lambda$, considering all particles are indistingushable in spin and orbital,
+has also to included to account for the restriction :eq:`slavespinrestriction`
 avoid the unphysical states.
 
 .. math::
@@ -61,7 +67,7 @@ avoid the unphysical states.
      + \lambda \sum_{n} \left( S_n^z +\frac{1}{2} - f_n^\dagger f_n \right)
     -\mu \sum_{n} f_n^\dagger f_n
 
-This separates in 2 Hamiltonians:
+Then is possible to separate it in 2 Hamiltonians:
 
 .. math::
    \mathcal{H}_f &= -(\lambda + \mu) \sum_{n} f_n^\dagger f_n \\
@@ -76,44 +82,51 @@ $0=\frac{\partial <\mathcal{H}>}{\partial \lambda}$ because restrictions are tre
    0 &=-\sum_{n} < f_n^\dagger f_n>_f + \sum_{n} <S_n^z>_s \\
    2Nn_F(-\lambda -\mu) &= 2N<S_n^z + \frac{1}{2}> = <S^z> + N = <Q> \\
    2Nn_F(-\lambda -\mu) &=
-   \mathcal{Z}^{-1} \sum_{Q=0}^{2N} \binom{2N}{Q} Q e^{\beta(U/2(Q-N)^2 +\lambda Q)}
+   \mathcal{Z}^{-1} \sum_{Q=0}^{2N} \binom{2N}{Q} Q \exp({\beta(U/2(Q-N)^2 +\lambda Q)})
 
 
 Where every term is averaged with its corresponding Hamiltonian, $n_F$ is the Fermi
-distribution and the Grand Canonical Partition function is
-$\mathcal{Z}^{-1} \sum_{Q=0}^{2N} \binom{2N}{Q} Q e^{\beta(U/2(Q-N)^2 +\lambda Q)}$.
+distribution and the Grand Canonical Partition function from the spin
+hamiltonian is
+$\mathcal{Z}= \sum_{Q=0}^{2N} \binom{2N}{Q} \exp({\beta(U/2(Q-N)^2 +\lambda Q)})$.
 Then by numerical root finding the
-multiplier $\bar{\lambda}(\mu,\beta)$ allows for to describe the mean fermion occupation,
-which is $2Nn_F(-\mu - \bar{\lambda}(\mu,\beta))$ and can recuperate the complete Coulomb ladder. It
-then has to be compared to the exact solution:
+multiplier $\bar{\lambda}(\mu,\beta)$ can be estimated and allows to describe the mean fermion occupation,
+which is $2Nn_F(-\mu - \bar{\lambda}(\mu,\beta))$ and can recuperate the complete Coulomb ladder.
+Comparing to the exact solution:
 
 .. math::
    2N<d^\dagger d> =  \mathcal{Z}^{-1} \sum_{Q=0}^{2N} \binom{2N}{Q} Q e^{\beta(U/2(Q-N)^2 -\mu Q)}
 
+As shown in the next plot, the slave spin approximation is capable of
+recovering the coulomb ocupation ladder, for the isolated atom with degenerate
+fermions in spin and orbital. The approximation works best around half-filling.
+
 .. plot:: Luca.py
 
-The lattice model
-'''''''''''''''''
 
-The Hamiltonian in this case when there is no Hund coupling($J=0$) and in a lattice reads:
+Case: The lattice model
+'''''''''''''''''''''''
+
+When in a lattice, atoms have overlapping orbitals and electrons are capable to
+move along this lattice. Then for the hamiltonian this term needs to be
+included appearing in the Tight-Binding formulation. Then as simple extension
+of the previous isolated atom case and in a multiorbital scenario, the
+Hamiltonian reads.
 
 .. math::
    \mathcal{H} = -\sum_m t_m \sum_{<i,j>, \sigma} (d^\dagger_{im\sigma}d_{jm\sigma} +h.c.)
     + \sum_{im\sigma}(\epsilon_m - \mu)d^\dagger_{im\sigma}d_{im\sigma}
     + \frac{U}{2} \sum_i \left( \sum_{m\sigma} d_{im\sigma}^\dagger d_{im\sigma} - N \right)^2
 
-Then when dealing with a multi orbital system, $2N$  new spin-$1/2$ variables
-$S^z_{m\sigma}$ and $2N$ auxiliary fermions $f_{m\sigma}$ are introduced, where
-$m=1, \cdots, N$ is the number of orbitals. And the local constrain is applied
-on each lattice site($i$):
-
+Here it is needed to enforce the restriction:
 .. math::  f_{im\sigma}^\dagger f_{im\sigma} = S_{im\sigma}^z + \frac{1}{2}
    :label: slavespinrestriction_multiorbitalsite
 
-using the Lagrange multiplier $\lambda_{im\sigma}$.
+using the Lagrange multiplier $\lambda_{im\sigma}$, which can be used declaring
+specific contrains to lattice site, orbital, and spin.
 
 When rewriting the Hamiltonian in terms of the auxiliary fermions and the slave
-spins the interaction term turn easily into:
+spins the interaction term turns easily into:
 
 .. math:: \mathcal{H}_{int} = \frac{U}{2} \sum_i \left( \sum_{m\sigma} S^z_{im\sigma} \right)^2
 
@@ -132,14 +145,24 @@ Hamiltonian reads:
 The focus now for simplicity is the case of zero crystal-field splitting
 $\epsilon_m=0$ and half-filling of each band one electron per site in each
 orbital $\mu=0$. The constrain is treated on average using a static and
-site independent Lagrange multiplier $\lambda_m$. Then the Hamiltonian reads:
+site, orbital and particle independent Lagrange multiplier $\lambda$.
+Then the Hamiltonian reads:
+
 
 .. math:: \mathcal{H} = &\frac{U}{2} \sum_i \left( \sum_{m\sigma} S^z_{im\sigma} \right)^2 \\
    &-\sum_m t_m \sum_{<i,j>, \sigma} 4S^x_{im\sigma}S^x_{jm\sigma}(f^\dagger_{im\sigma}f_{jm\sigma} +h.c.) \\
-   &+\sum_{im\sigma} \lambda_m \left( S_{im\sigma}^z + \frac{1}{2} - f_{im\sigma}^\dagger f_{im\sigma} \right)
+   &+\lambda\sum_{im\sigma} \left( S_{im\sigma}^z + \frac{1}{2} - f_{im\sigma}^\dagger f_{im\sigma} \right)
 
-Using a mean field approach in which operators are treated in a Hartree-Fock
-approximation it is possible to decouple the Hamiltonian into two effective ones:
+Using a Hartree-Fock approximation for the operators $S$ and $f$:
+
+.. math::
+   S^x_{im\sigma}S^x_{jm\sigma}(f^\dagger_{im\sigma}f_{jm\sigma} +h.c.)
+   \approx <S^x_{im\sigma}S^x_{jm\sigma}>(f^\dagger_{im\sigma}f_{jm\sigma}
+   +h.c.)
+   +S^x_{im\sigma}S^x_{jm\sigma}<f^\dagger_{im\sigma}f_{jm\sigma} +h.c.>
+   -<S^x_{im\sigma}S^x_{jm\sigma}(f^\dagger_{im\sigma}f_{jm\sigma} +h.c.)>
+
+it is then possible to decouple the Hamiltonian into two effective ones:
 
 .. math:: \mathcal{H}^f_{eff} = &-\sum_m t_m^{eff} \sum_{<i,j>, \sigma} (f^\dagger_{im\sigma}f_{jm\sigma} +h.c.) \\
    &-\sum_{im\sigma} \lambda_m f_{im\sigma}^\dagger f_{im\sigma}
