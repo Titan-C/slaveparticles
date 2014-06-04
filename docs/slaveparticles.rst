@@ -194,7 +194,10 @@ In the ordered spin basis $\{\ket{\uparrow\uparrow}, \ket{\uparrow\downarrow}, \
 
 .. plot::
 
-   from spinorbit.plotter import plot_quasiparticle_weight
+   from slavespins.plotter import plot_quasiparticle_weight
    plot_quasiparticle_weight()
    import matplotlib.pyplot as plt
    plt.show()
+
+.. automodule:: slavespins
+   :members: spin_operator
