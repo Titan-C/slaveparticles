@@ -111,7 +111,9 @@ When in a lattice, atoms have overlapping orbitals and electrons are capable to
 move along this lattice. Then for the hamiltonian this term needs to be
 included appearing in the Tight-Binding formulation. Then as simple extension
 of the previous isolated atom case and in a multiorbital scenario, the
-Hamiltonian reads.
+Hamiltonian reads. The focus now for simplicity is the case of zero crystal-field splitting
+$\epsilon_m=0$ and half-filling of each band one electron per site in each
+orbital $\mu=0$.
 
 .. math::
    \mathcal{H} = -\sum_m t_m \sum_{<i,j>, \sigma} (d^\dagger_{im\sigma}d_{jm\sigma} +h.c.)
@@ -119,6 +121,7 @@ Hamiltonian reads.
     + \frac{U}{2} \sum_i \left( \sum_{m\sigma} d_{im\sigma}^\dagger d_{im\sigma} - N \right)^2
 
 Here it is needed to enforce the restriction:
+
 .. math::  f_{im\sigma}^\dagger f_{im\sigma} = S_{im\sigma}^z + \frac{1}{2}
    :label: slavespinrestriction_multiorbitalsite
 
@@ -142,9 +145,8 @@ Hamiltonian reads:
    \mathcal{H}_0 = -\sum_m t_m \sum_{<i,j>, \sigma} 4S^x_{im\sigma}S^x_{jm\sigma}(f^\dagger_{im\sigma}f_{jm\sigma} +h.c.)
    + \sum_{im\sigma}(\epsilon_m - \mu)f^\dagger_{im\sigma}f_{im\sigma}
 
-The focus now for simplicity is the case of zero crystal-field splitting
-$\epsilon_m=0$ and half-filling of each band one electron per site in each
-orbital $\mu=0$. The constrain is treated on average using a static and
+
+The constrain is treated on average using a static and
 site, orbital and particle independent Lagrange multiplier $\lambda$.
 Then the Hamiltonian reads:
 
@@ -158,8 +160,8 @@ Using a Hartree-Fock approximation for the operators $S$ and $f$:
 .. math::
    S^x_{im\sigma}S^x_{jm\sigma}(f^\dagger_{im\sigma}f_{jm\sigma} +h.c.)
    \approx <S^x_{im\sigma}S^x_{jm\sigma}>(f^\dagger_{im\sigma}f_{jm\sigma}
-   +h.c.)
-   +S^x_{im\sigma}S^x_{jm\sigma}<f^\dagger_{im\sigma}f_{jm\sigma} +h.c.>
+   +h.c.) \\
+   +S^x_{im\sigma}S^x_{jm\sigma}<f^\dagger_{im\sigma}f_{jm\sigma} +h.c.> \\
    -<S^x_{im\sigma}S^x_{jm\sigma}(f^\dagger_{im\sigma}f_{jm\sigma} +h.c.)>
 
 it is then possible to decouple the Hamiltonian into two effective ones:
@@ -167,44 +169,49 @@ it is then possible to decouple the Hamiltonian into two effective ones:
 .. math:: \mathcal{H}^f_{eff} = &-\sum_m t_m^{eff} \sum_{<i,j>, \sigma} (f^\dagger_{im\sigma}f_{jm\sigma} +h.c.) \\
    &-\sum_{im\sigma} \lambda_m f_{im\sigma}^\dagger f_{im\sigma}
    :label: hamileff_fermion
+
 .. math:: \mathcal{H}^S_{eff} = &-\sum_m 4J^{eff}_m \sum_{<i,j>, \sigma} S^x_{im\sigma}S^x_{jm\sigma} \\
    &+\sum_{im\sigma} \lambda_m \left( S_{im\sigma}^z + \frac{1}{2} \right)
    +\frac{U}{2} \sum_i \left( \sum_{m\sigma} S^z_{im\sigma} \right)^2
    :label: hamileff_spin
 
-Where the effective hopping and the effective exchange constants are determined
-self consistently from:
+Where the effective hopping and the effective exchange constants are
+determined self consistently from:
 
 .. math::
    t^{eff}_m &= 4t_m<S^x_{im\sigma}S^x_{jm\sigma}>
-   :label: eff_hopping
+   :label:
+           eff_hopping
 .. math::
    J^{eff}_m &= t_m<f^\dagger_{im\sigma}f_{jm\sigma} +h.c.>
    :label: eff_exchange
 
-The fermion field hamiltonian is a non-interacting one. For the slave spin
-hamiltonian, it can be treated in a single-site mean field approximation.
+The fermion field hamiltonian is a non-interacting one, and it's analytical
+solution is well known. For the slave spin hamiltonian, it can be treated
+in a single-site using the Weiss mean field approximation.
 
 .. math:: \mathcal{H}_s = &\sum_{m\sigma} 2h_mS^x_{m\sigma}
-   +\sum_{m\sigma} \lambda_m \left( S_{im\sigma}^z + \frac{1}{2} \right)
+   +\sum_{m\sigma} \lambda_m \left( S_{m\sigma}^z + \frac{1}{2} \right)
    +\frac{U}{2} \left( \sum_{m\sigma} S^z_{m\sigma} \right)^2
    :label: hamil_spin_meanfield
 
+
 Here the mean field $h_m$ has to be determined self-consistently from:
 
-.. math:: h_m = -2zJ^{eff}_m<S^x_{m\sigma}> = 4<S^x_{m\sigma}>\frac{1}{N_s}\sum_k \epsilon_{km}<f^\dagger_{km\sigma}f_{km\sigma}>
+.. math:: h
+   _m = -2zJ^{eff}_m<S^x_{m\sigma}> = 4<S^x_{m\sigma}>\frac{1}{N_s}\sum_k \epsilon_{km}<f^\dagger_{km\sigma}f_{km\sigma}>
 
-where $z$ is the coordination number, $\epsilon_{km}=-t_m\sum_{\{\vec{a}\}}e^{\vec{k}\cdot\vec{a}}$
+where $z$ is the coordination number, $\epsilon_{km}=-t_m\sum_{\{\vec{a}\}}e^{-i\vec{k}\cdot\vec{a}}$
 with $\{\vec{a}\}$ the set of vectors to the nearest neighbors
 
 The effective fermion hamiltonian is
 
-.. math:: \mathcal{H}^f_{eff} = &\sum_{km\sigma} (-t_m^{eff} \sum_{\{\vec{a}\}} e^{i\vec{k}\cdot\vec{a}} - \lambda_m) f^\dagger_{km\sigma}f_{km\sigma} \\
-   &\sum_{km\sigma} (Z_m\epsilon_{mk} - \lambda_m) f^\dagger_{km\sigma}f_{km\sigma}
+.. math:: \mathcal{H}^f_{eff} = &\sum_{km\sigma} (-t_m^{eff} \sum_{\{\vec{a}\}} e^{-i\vec{k}\cdot\vec{a}} - \lambda_m) f^\dagger_{km\sigma}f_{km\sigma} \\
+   &=\sum_{km\sigma} (Z_m\epsilon_{mk} - \lambda_m) f^\dagger_{km\sigma}f_{km\sigma}
 
 where $Z_m=4<S^x_{im\sigma}>^2$ is the quasiparticle weight.
 
-In the ordered spin basis $\{\ket{\uparrow\uparrow}, \ket{\uparrow\downarrow}, \ket{\downarrow\uparrow}, \ket{\uparrow\downarrow}\}$ the operators are then
+In the ordered spin basis $\{\ket{\uparrow\uparrow}, \ket{\uparrow\downarrow}, \ket{\downarrow\uparrow}, \ket{\uparrow\downarrow}\}$, where the spin labeling the operators are then
 
 .. math::
    S^z_{\uparrow} = \frac{1}{2} \left[\begin{smallmatrix}1 & 0 & 0 & 0\\0 & 1 & 0 & 0\\0 & 0 & -1 & 0\\0 & 0 & 0 & -1\end{smallmatrix}\right]
@@ -219,8 +226,7 @@ In the ordered spin basis $\{\ket{\uparrow\uparrow}, \ket{\uparrow\downarrow}, \
 
    from slavespins.plotter import plot_quasiparticle_weight
    plot_quasiparticle_weight()
+   plot_quasiparticle_weight(2)
    import matplotlib.pyplot as plt
    plt.show()
 
-.. automodule:: slavespins
-   :members: spin_operator
