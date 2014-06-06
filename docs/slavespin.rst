@@ -122,8 +122,8 @@ Where the mean field $h_\sigma$
 .. math:: h_\sigma = \langle O_\sigma \rangle \frac{1}{N_s} \sum_k \epsilon_k
    \langle f^\dagger_{k\sigma}f_{k\sigma} \rangle
 
-Choosing the gauge $c$
-""""""""""""""""""""""
+Choosing the gauge c
+""""""""""""""""""""
 
 The condition set, to reproduce the non-interacting case is $Q_{ij} = Z = 1$,
 where the quasiparticle residum $Z=\langle O_\sigma \rangle$. In the single
@@ -133,7 +133,7 @@ suppressing the spin index $\sigma$ since in this case up-spin and down-spin
 fermions are decoupled.
 
 .. math::
-   \mathcal{H}_S &= h O^\dagger + h* O \lambda(S^z_\sigma + \frac{1}{2}) \\
+   \mathcal{H}_S &= hO^\dagger+\overline{h}O+\lambda(S^z_\sigma + \frac{1}{2})\\
    &= \begin{pmatrix} \lambda & c \overline{h} + h\\h \overline{c} +
    \overline{h} & 0 \end{pmatrix}
 
@@ -156,7 +156,7 @@ values of $S^z$ and $O$ are:
    \langle O   \rangle = - \frac{a +\overline{a}c}{2R}
 
 It is clearly seen that the Lagrange multiplier $\lambda$ depends on the
-density $n$ as it adjusted to satisfy the constraint equation:
+density $n$ and it is adjusted to satisfy the constraint equation:
 
 .. math:: n-\frac{1}{2} = \langle S^z \rangle = -\frac{\lambda}{4R}
    :label: Sz_expected_constrain
@@ -166,13 +166,12 @@ and $c$ needs to be tuned to match the condition $Z=1$
    :label: Zadjust
 
 It is possible to eliminate $\lambda$ from the conditions by squaring
-:eq:`Sz_expected_constrain`, following the next derivation:
+:eq:`Sz_expected_constrain` and using the relation :eq:`Zadjust`, following the next derivation:
 
 .. math::
    \frac{|a| ^2}{4R^2} +(n-\frac{1}{2})^2 &= -\frac{\lambda^2}{16R^2} +
    \frac{|a| ^2}{4R^2} \\
-   \frac{|a| ^2}{|a+\overline{a}c| ^2} &= n - n^2 \text{     replacing
-   :eq:`Zadjust`}
+   \frac{|a| ^2}{|a+\overline{a}c| ^2} &= n - n^2
 
 Then it is possible to choose $c$ real, making also $h$ and $a$ real. The
 expression for $c$ is found to be independent of the mean field $h$:
