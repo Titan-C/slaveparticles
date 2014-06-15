@@ -160,6 +160,7 @@ density $n$ and it is adjusted to satisfy the constraint equation:
 
 .. math:: n-\frac{1}{2} = \langle S^z \rangle = -\frac{\lambda}{4R}
    :label: Sz_expected_constrain
+
 and $c$ needs to be tuned to match the condition $Z=1$
 
 .. math:: Z = \langle O \rangle^2 = \frac{|a +\overline{a}c| ^2 }{4R^2}=1
@@ -176,7 +177,7 @@ It is possible to eliminate $\lambda$ from the conditions by squaring
 Then it is possible to choose $c$ real, making also $h$ and $a$ real. The
 expression for $c$ is found to be independent of the mean field $h$:
 
-.. math:: c = \frac{1}{sqrt{n(1-n)}} -1
+.. math:: c = \frac{1}{\sqrt{n(1-n)}} -1
 
 
 
