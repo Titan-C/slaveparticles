@@ -224,9 +224,26 @@ In the ordered spin basis $\{\ket{\uparrow\uparrow}, \ket{\uparrow\downarrow}, \
 
 .. plot::
 
-   from slavespins.plotter import plot_quasiparticle_weight
-   plot_quasiparticle_weight()
-   plot_quasiparticle_weight(2)
-   import matplotlib.pyplot as plt
-   plt.show()
+   from slavespins.plotter import calc_quasiparticle_weight, plot_quasiparticle_weight
+   import numpy as np
+   from matplotlib.pyplot import ylim, xlim, plot, subplots, xlabel,\
+   ylabel, title, legend, imshow, colorbar, tight_layout
+   from slavespins import spin_operator, orbital_energies
+   output =[]
+   N=1
+   n=0.5
+   for end in [3.45, 5.15, 6.85, 8.55]:
+     Uspan = np.arange(0,end,0.1)
+     sl = spin_operator(slaves=2*N, orbitals=N, avg_particles=2*N*n,
+		  hopping=[0.5]*2*N, populations=[n]*2*N)
+     [zet, lam, mu], hlog, mean_f = calc_quasiparticle_weight(sl, Uspan, [0.])
+     output.append([zet,Uspan])
+     N+=1
 
+   for (z,u),c in zip(output,range(1,5)):
+     plot(u,z[:,0],label='\$N={}\$'.format(str(c)))
+   legend(loc=0)
+   ylim([0,1.05])
+   xlabel('\$U/D\$', fontsize=15)
+   ylabel('\$Z\$', fontsize=15)
+   tight_layout()
