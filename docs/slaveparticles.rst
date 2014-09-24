@@ -228,13 +228,13 @@ In the ordered spin basis $\{\ket{\uparrow\uparrow}, \ket{\uparrow\downarrow}, \
    import numpy as np
    from matplotlib.pyplot import ylim, xlim, plot, subplots, xlabel,\
    ylabel, title, legend, imshow, colorbar, tight_layout
-   from slavespins import spin_operator, orbital_energies
+   from slavespins import Spinon, orbital_energies
    output =[]
    N=1
    n=0.5
    for end in [3.45, 5.15, 6.85, 8.55]:
      Uspan = np.arange(0,end,0.1)
-     sl = spin_operator(slaves=2*N, orbitals=N, avg_particles=2*N*n,
+     sl = Spinon(slaves=2*N, orbitals=N, avg_particles=2*N*n,
 		  hopping=[0.5]*2*N, populations=[n]*2*N)
      [zet, lam, mu], hlog, mean_f = calc_quasiparticle_weight(sl, Uspan, [0.])
      output.append([zet,Uspan])
