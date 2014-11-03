@@ -6,8 +6,8 @@ Created on Wed Jun  4 14:37:13 2014
 from __future__ import division, absolute_import, print_function
 import numpy as np
 from scipy import linalg as LA
-from slaveparticles.quantum import operators as qo
-from slaveparticles.spins.spinon import spinflipandhop
+import slaveparticles.quantum.operators as qo
+import slaveparticles.spins.spinon as ss
 
 def test_spinmatrix():
     """Verifies spin matrices commute"""
@@ -45,7 +45,7 @@ def test_spinmatrix():
 def test_spinflipandhop():
     """Test the operator has the required amount of non-zero entries"""
     for orbitals in range(2, 6):
-        sfh = spinflipandhop(orbitals*2)
+        sfh = ss.spinflipandhop(orbitals*2)
         assert sfh.nnz == orbitals*(orbitals-1)/2 * 4**(orbitals-1)
 
 

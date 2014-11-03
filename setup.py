@@ -11,7 +11,7 @@ class PyTest(TestCommand):
     """Test class to do test coverage analysis"""
     def finalize_options(self):
         TestCommand.finalize_options(self)
-        self.test_args = ['--cov-report', 'term-missing', '--cov', 'slavespins', 'tests/']
+        self.test_args = ['--cov-report', 'term-missing', '--cov', 'slaveparticles', 'tests/']
         self.test_suite = True
     def run_tests(self):
         #import here, cause outside the eggs aren't loaded

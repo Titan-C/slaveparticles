@@ -21,9 +21,9 @@ def test_filling_integral():
     assert abs(dos.bethe_filling_zeroT(0, hop)   - 1/2.) < 1e-15
     assert abs(dos.bethe_filling_zeroT(-3*hop, hop))     < 1e-15
     assert abs(dos.bethe_filling_zeroT(-hop, hop) -
-              quad(dos.bethe_fermi, -2*hop, -hop, (1, 0, hop, 1e5))[0]) < 1e-15
+            quad(dos.bethe_fermi, -2*hop, -hop, (1, 0, hop, 1e5))[0]) < 1e-15
     assert (abs(ss.fermion_avg([2*hop, 0], [hop]*2, 'ocupation')
-    - np.array([1, 1/2.])) < 1e-15).all()
+            - np.array([1, 1/2.])) < 1e-15).all()
 
 
 def test_find_fermi_energy_zeroT():
