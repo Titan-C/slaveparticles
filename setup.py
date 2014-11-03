@@ -21,10 +21,13 @@ class PyTest(TestCommand):
 
 setup(
     name = "Slave Particles",
+    description = "Educative code on Slave Particles",
     version = "0.2",
     packages = find_packages(),
+    url = "https://github.com/Titan-C/slaveparticles",
     author = "Óscar Nájera",
     author_email='najera.oscar@gmail.com',
+    license = "GNU General Public License v3 (GPLv3)",
 
     install_requires=['numpy', 'scipy', 'Sphinx', 'matplotlib'],
 
