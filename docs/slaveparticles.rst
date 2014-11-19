@@ -1,16 +1,8 @@
-Slave Particles
-===============
-
-Representation of physical electron operators. The fermion is expressed in
-terms of constrained(slave) auxiliary fields that enlarge the Hilbert space
-but are subject to local restrictions that eliminate unphysical states.
-
-
 Slave Spin
-----------
+==========
 
 Start from the observation of the possible occupancies of a spinless fermion on
-a given site, $n_d=0$ and $n_d=1$, they can be represented as two possible
+a given site are: $n_d=0$ and $n_d=1$. These can be represented as two possible
 states of a spin-$1/2$ variable, $S^z=-1/2$ and $S^z=+1/2$. To ensure, in this
 fermionic context, the anti-commutation properties and auxiliary fermion $f$ is
 introduced, with the additional local constrain:
@@ -101,7 +93,7 @@ As shown in the next plot, the slave spin approximation is capable of
 recovering the coulomb ocupation ladder, for the isolated atom with degenerate
 fermions in spin and orbital. The approximation works best around half-filling.
 
-.. plot:: Luca.py
+.. plot::  degenerate_2orb_filling.py
 
 
 Case: The lattice model

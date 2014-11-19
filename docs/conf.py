@@ -19,6 +19,7 @@ import os
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #sys.path.insert(0, os.path.abspath('.'))
+sys.path.insert(0, os.path.abspath('exts'))
 
 # -- General configuration ------------------------------------------------
 
@@ -36,6 +37,8 @@ extensions = [
     'sphinx.ext.coverage',
     'sphinx.ext.pngmath',
     'sphinx.ext.viewcode',
+    'matplotlib.sphinxext.plot_directive',
+    'math_dollar'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -199,7 +202,7 @@ latex_elements = {
 # Additional stuff for the LaTeX preamble.
 #'preamble': '',
 }
-
+pngmath_latex_preamble = "\usepackage{braket}"
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
