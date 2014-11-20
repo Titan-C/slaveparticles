@@ -36,7 +36,6 @@ def test_singleorbit():
 
     system_output(slsp, coulomb, results, True)
 
-test_singleorbit()
 
 @pytest.mark.slow
 def test_two_orbit():
