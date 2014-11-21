@@ -8,7 +8,7 @@ from __future__ import division, absolute_import, print_function
 from scipy.integrate import quad
 import numpy as np
 import random
-import slaveparticles.spins.fermion as ss
+import slaveparticles.spins as ss
 import slaveparticles.quantum.dos as dos
 
 hop = random.uniform(0.5, 2)

@@ -216,11 +216,11 @@ In the ordered spin basis $\{\ket{\uparrow\uparrow}, \ket{\uparrow\downarrow}, \
 
 .. plot::
 
-   from slavespins.plotter import calc_quasiparticle_weight, plot_quasiparticle_weight
+   from slaveparticles.plotter import calc_quasiparticle_weight, plot_quasiparticle_weight
    import numpy as np
    from matplotlib.pyplot import ylim, xlim, plot, subplots, xlabel,\
    ylabel, title, legend, imshow, colorbar, tight_layout
-   from slavespins import Spinon, orbital_energies
+   from slaveparticles import Spinon, orbital_energies
    output =[]
    N=1
    n=0.5

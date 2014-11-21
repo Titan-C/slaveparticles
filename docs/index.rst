@@ -20,6 +20,7 @@ Contents:
    slaveparticle.rst
    slavespins.rst
 
+.. automodule::
 
 
 Indices and tables

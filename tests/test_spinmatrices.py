@@ -7,7 +7,7 @@ from __future__ import division, absolute_import, print_function
 import numpy as np
 from scipy import linalg as LA
 import slaveparticles.quantum.operators as qo
-import slaveparticles.spins.spinon as ss
+import slaveparticles.spins as ss
 
 def test_spinmatrix():
     """Verifies spin matrices commute"""

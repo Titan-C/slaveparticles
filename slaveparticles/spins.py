@@ -5,13 +5,32 @@ Created on Wed Jun 18 13:05:04 2014
 """
 from __future__ import division, absolute_import, print_function
 import numpy as np
-from slaveparticles.quantum.dos import bethe_findfill_zeroT, \
-     bethe_find_crystalfield
-from slaveparticles.quantum.operators import diagonalize, expected_value, \
-    spin_gen, spin_z
-from slaveparticles.spins.fermion import fermion_avg, orbital_energies
 from scipy.optimize import root
 
+from slaveparticles.quantum.dos import bethe_findfill_zeroT, \
+     bethe_find_crystalfield, bethe_ekin_zeroT, bethe_filling_zeroT
+from slaveparticles.quantum.operators import diagonalize, expected_value, \
+    spin_gen, spin_z
+
+# Fermionic part of the slave spin formulation
+def orbital_energies(param, quasiparticle):
+    """calculates the output orbital energies for the system after the spin
+       problem has converged for the lagrange multipliers and knows the state
+       of the system for the given populations"""
+
+    return param['lambda'] + quasiparticle * param['orbital_e_free']
+
+def fermion_avg(efermi, norm_hopping, func):
+    """calcules for every slave it's average over the desired observable"""
+    if func == 'ekin':
+        func = bethe_ekin_zeroT
+    elif func == 'ocupation':
+        func = bethe_filling_zeroT
+
+    return np.asarray([func(ef, tz) for ef, tz in \
+            zip(efermi, norm_hopping)])
+
+# Spin form of the Slave spin formulation
 def estimate_gauge(density):
     """Calculates the gauge term for the generic spin matrices in the
        case of single site"""
