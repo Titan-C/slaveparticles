@@ -25,7 +25,7 @@ operator $f$. Then, one formulates the constrain:
    :label: slavespinrestriction
 
 which insures that the number of auxiliary fermions and the spin's states are
-the same and, above all, it eliminates the nonphysical states
+the same and, above all, it eliminates the non-physical states
 
 .. math::
    \ket{n_f=1,S^z = -1/2} \\
@@ -65,7 +65,7 @@ operators. The first choice is to use the auxiliary
 fermions for the non-interacting term($d_n^\dagger d_n\rightarrow f_n^\dagger
 f_n$) and the slave spins for the interacting case($d_n^\dagger d_n \rightarrow
 S^z_n + \frac{1}{2}$). We seek a paramagnetic solution, then the constraint
-:eq:`slavespinrestriction`  which avoids nonphysical states
+:eq:`slavespinrestriction`  which avoids non-physical states
 is included through a unique Lagrange multiplier $\lambda$, since all particles
 are indistinguishable in spin and orbital quantum numbers. After this treatment
 the Hamiltonian reads:
@@ -98,7 +98,7 @@ respected at the mean field level too.
 
 Where every term is averaged with its corresponding Hamiltonian, $n_F$ is the Fermi
 distribution and the Grand Canonical Partition function from the spin
-hamiltonian is
+Hamiltonian is
 $\mathcal{Z}= \sum_{Q=0}^{2N} \binom{2N}{Q} \exp({\beta(U/2(Q-N)^2 +\lambda Q)})$.
 Then by numerical root finding the
 multiplier $\bar{\lambda}(\mu,\beta)$ can be estimated and allows to describe
@@ -118,7 +118,7 @@ given by:
    2N<d^\dagger d> =  \mathcal{Z}^{-1} \sum_{Q=0}^{2N} \binom{2N}{Q} Q e^{\beta(U/2(Q-N)^2 -\mu Q)}
 
 As shown in the next plot, the slave spin approximation is capable of
-recovering the coulomb ocupation ladder, for the isolated atom with degenerate
+recovering the coulomb occupation ladder, for the isolated atom with degenerate
 fermions in spin and orbital. The approximation works best around half-filling.
 
 .. plot::  degenerate_2orb_filling.py
@@ -128,9 +128,9 @@ Case: The lattice model - The Hubbard Model
 '''''''''''''''''''''''''''''''''''''''''''
 
 When in a lattice, atoms have overlapping orbitals and electrons are capable to
-move along this lattice. Then for the hamiltonian this term needs to be
+move along this lattice. Then for the Hamiltonian this term needs to be
 included appearing in the Tight-Binding formulation. Then as simple extension
-of the previous isolated atom case and in a multiorbital scenario, the
+of the previous isolated atom case and in a multi-orbital scenario, the
 Hamiltonian reads. The focus now for simplicity is the case of zero crystal-field splitting
 $\epsilon_m=0$ and half-filling of each band one electron per site in each
 orbital $\mu=0$.
@@ -147,7 +147,7 @@ Here it is needed to enforce the restriction:
    :label: slavespinrestriction_multiorbitalsite
 
 using the Lagrange multiplier $\lambda_{im\sigma}$, which can be used declaring
-specific contrains to lattice site, orbital, and spin.
+specific constrains to lattice site, orbital, and spin.
 
 When rewriting the Hamiltonian in terms of the auxiliary fermions and the slave
 spins the interaction term turns easily into:
@@ -202,8 +202,8 @@ determined self consistently from:
    J^{eff}_m &= t_m<f^\dagger_{im\sigma}f_{jm\sigma} +h.c.>
    :label: eff_exchange
 
-The fermion field hamiltonian is a non-interacting one, and it's analytical
-solution is well known. For the slave spin hamiltonian, it can be treated
+The fermion field Hamiltonian is a non-interacting one, and it's analytical
+solution is well known. For the slave spin Hamiltonian, it can be treated
 in a single-site using the Weiss mean field approximation.
 
 .. math:: \mathcal{H}_s = &\sum_{m\sigma} 2h_mS^x_{m\sigma}
@@ -219,9 +219,9 @@ Here the mean field $h_m$ has to be determined self-consistently from:
     :label: mean_field
 
 $z$ is the coordination number, $\epsilon_{km}=-t_m\sum_{\{\vec{a}\}}e^{-i\vec{k}\cdot\vec{a}}$
-with $\{\vec{a}\}$ the set of vectors to the nearest neighbors
+with $\{\vec{a}\}$ the set of vectors to the nearest neighbours
 
-The effective fermion hamiltonian is
+The effective fermion Hamiltonian is
 
 .. math:: \mathcal{H}^f_{eff} = &\sum_{km\sigma} (-t_m^{eff} \sum_{\{\vec{a}\}} e^{-i\vec{k}\cdot\vec{a}} - \lambda_m) f^\dagger_{km\sigma}f_{km\sigma} \\
    &=\sum_{km\sigma} (Z_m\epsilon_{mk} + \epsilon_m - \mu - \lambda_{m\sigma}) f^\dagger_{km\sigma}f_{km\sigma}
@@ -229,7 +229,7 @@ The effective fermion hamiltonian is
 
 where $Z_m=4<S^x_{im\sigma}>^2$ is the quasiparticle weight.
 
-In the ordered spin basis $\{\ket{\uparrow\uparrow}, \ket{\uparrow\downarrow}, \ket{\downarrow\uparrow}, \ket{\uparrow\downarrow}\}$, where the spin labeling the operators are then
+In the ordered spin basis $\{\ket{\uparrow\uparrow}, \ket{\uparrow\downarrow}, \ket{\downarrow\uparrow}, \ket{\uparrow\downarrow}\}$, where the spin labelling the operators are then
 
 .. math::
    S^z_{\uparrow} = \frac{1}{2} \left[\begin{smallmatrix}1 & 0 & 0 & 0\\0 & 1 & 0 & 0\\0 & 0 & -1 & 0\\0 & 0 & 0 & -1\end{smallmatrix}\right]
@@ -324,13 +324,13 @@ problem [Yu2011]_ [Florens2004]_.
             name = 'Z_half_'+str(band)+'band'
             dop = [0.5]
             data = ssplt.calc_z(band, dop, np.arange(0, u_int, 0.1),0., name)
-            plt.plot(data['u_int'], data['zeta'][0, :, 0], label='$N={}$'.format(str(band)))
+            plt.plot(data['u_int'], data['zeta'][0, :, 0], label='N={}'.format(str(band)))
 
         ssplt.label_saves('Z_half_multiorb.png')
 
     plot_degbandshalffill()
 
-Introcing dopping
+Introducing doping
 -----------------
 
 The previous introduction to the slave spins treats the Hubbard Hamiltonian
@@ -524,7 +524,7 @@ expression for $c$ is found to be independent of the mean field $h$:
     #band dop_phasediag
     def plot_dop_phase(bands, int_max, hund_cu):
         """Phase plot of Quasiparticle weight for N degenerate bands
-        under doping shows transition only at interger filling
+        under doping shows transition only at integer filling
         the rest are metallic states"""
         name = 'Z_dop_phase_'+str(bands)+'bands_U'+str(int_max)+'J'+str(hund_cu)
         dop = np.sort(np.hstack((np.linspace(0.01,0.99,50),
