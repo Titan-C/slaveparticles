@@ -536,3 +536,32 @@ expression for $c$ is found to be independent of the mean field $h$:
     plot_dop(1, 4.6, [0.5, 0.499, 0.495, 0.49, 0.45, 0.4, 0.2, 0.1], 0., 'Z_dop_1orb')
     plot_dop_phase(2, 6, 0.)
 
+Hund's coupling
+---------------
+
+The interaction Hamiltonian in this multiorbital systems then becomes:
+
+.. math::
+    :nowrap:
+
+    \begin{align*}
+    \mathcal{H} =& U \sum_{i,m} n_{im\uparrow}n_{im\downarrow}
+     + \left(U' - \frac{J}{2} \right) \sum_{i\sigma \atop m>m'} n_{im\sigma}n_{im'\sigma} \\
+     &-J\sum_{i,m>m'}\left( 2\vec{S}_{im}\cdot\vec{S}_{im'}
+     + ( d^\dagger_{im\uparrow}d^\dagger_{im\downarrow}d_{im'\uparrow}d_{im'\downarrow} + h.c.)  \right)
+    \end{align*}
+
+Where $U$ is the intra orbital Hubbard interaction and $U' = U - 2J$ is the
+interorbital interaction $\vec{S}_{im}$ is the total spin in an orbital.
+Which is then traded into slave spin variables to give:
+
+.. math::
+    :nowrap:
+
+    \begin{align*}
+    \mathcal{H} =& \frac{U'}{2} \sum_i \left(\sum_{m\sigma} S^z_{im\sigma} \right)^2
+      + J \sum_{im}\left(\sum_\sigma S^z_{im\sigma} \right)^2
+      - \frac{J}{2} \sum_{i\sigma} \left(\sum_m S^z_{im\sigma} \right)^2 \\
+     & - J \sum_{i,m>m'}\left( S^+_{im\uparrow}S^-_{im\downarrow}S^+_{im'\downarrow}S^-_{im'\uparrow}
+       + S^+_{im\uparrow}S^+_{im\downarrow}S^-_{im'\uparrow}S^-_{im'\downarrow}+ h.c. \right)
+    \end{align*}
