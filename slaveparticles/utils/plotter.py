@@ -40,7 +40,7 @@ def calc_z(bands, filling, interaction, hund_cu, name):
                 slsp = Spinon(slaves=2*bands, orbitals=bands, \
                              hopping=[0.5]*2*bands, populations=[dop]*2*bands)
                 dopout.append(solve_loop(slsp, interaction, hund_cu)[0][0])
-            np.savez(name, zeta=dopout, u_int=interaction, doping=filling)
+            np.savez(name, zeta=dopout, u_int=interaction, doping=filling, hund=hund_cu)
 
     return data
 
