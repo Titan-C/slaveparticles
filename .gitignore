@@ -56,3 +56,4 @@ target/
 # execution outputs
 *.png
 *.npy
+*.npz
