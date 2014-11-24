@@ -2,6 +2,6 @@
 """
 @author: Óscar Nájera
 """
-
-from slaveparticles import spins
-from slaveparticles import quantum
+import slaveparticles.spins
+import slaveparticles.quantum
+import slaveparticles.utils

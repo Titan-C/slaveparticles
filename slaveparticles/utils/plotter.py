@@ -5,7 +5,7 @@ Created on Tue Apr  8 14:09:37 2014
 """
 
 import numpy as np
-from slavespins import Spinon, orbital_energies
+from slaveparticles.spins import Spinon, orbital_energies
 import matplotlib.pyplot as plt
 
 def solve_loop(slsp, u_span, j_coup):

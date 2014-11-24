@@ -1,5 +1,9 @@
+=============================
 Slave Spins Mean Field Theory
 =============================
+
+Construction
+------------
 
 Start from the observation that the possible occupancies of a real fermion($d$)
 on a given site, $n_d=0$ and $n_d=1$, can be
@@ -97,9 +101,18 @@ distribution and the Grand Canonical Partition function from the spin
 hamiltonian is
 $\mathcal{Z}= \sum_{Q=0}^{2N} \binom{2N}{Q} \exp({\beta(U/2(Q-N)^2 +\lambda Q)})$.
 Then by numerical root finding the
-multiplier $\bar{\lambda}(\mu,\beta)$ can be estimated and allows to describe the mean fermion occupation,
-which is $2Nn_F(-\mu - \bar{\lambda}(\mu,\beta))$ and can recuperate the complete Coulomb ladder.
-Comparing to the exact solution:
+multiplier $\bar{\lambda}(\mu,\beta)$ can be estimated and allows to describe
+the mean fermion occupation,
+which is $2Nn_F(-\mu - \bar{\lambda}(\mu,\beta))$ . The
+solution that we find can be conveniently represented by the total fermion
+occupation as a function of the chemical potential $\mu$. The resulting curve
+displays the well known Coulomb ladder-shape,
+where the system acquires only integer fillings. The change from an integer
+occupation to an adjacent one takes place abruptly as a function of the
+chemical potential $\mu$.
+
+It is necessary to compare the slave spins solution to the exact solution,
+given by:
 
 .. math::
    2N<d^\dagger d> =  \mathcal{Z}^{-1} \sum_{Q=0}^{2N} \binom{2N}{Q} Q e^{\beta(U/2(Q-N)^2 -\mu Q)}
@@ -111,8 +124,8 @@ fermions in spin and orbital. The approximation works best around half-filling.
 .. plot::  degenerate_2orb_filling.py
 
 
-Case: The lattice model
-'''''''''''''''''''''''
+Case: The lattice model - The Hubbard Model
+'''''''''''''''''''''''''''''''''''''''''''
 
 When in a lattice, atoms have overlapping orbitals and electrons are capable to
 move along this lattice. Then for the hamiltonian this term needs to be
@@ -126,6 +139,7 @@ orbital $\mu=0$.
    \mathcal{H} = -\sum_m t_m \sum_{<i,j>, \sigma} (d^\dagger_{im\sigma}d_{jm\sigma} +h.c.)
     + \sum_{im\sigma}(\epsilon_m - \mu)d^\dagger_{im\sigma}d_{im\sigma}
     + \frac{U}{2} \sum_i \left( \sum_{m\sigma} d_{im\sigma}^\dagger d_{im\sigma} - N \right)^2
+   :label: Hubbard_multiorb
 
 Here it is needed to enforce the restriction:
 
@@ -145,22 +159,17 @@ operator has to be chosen. The direct possibility $d^\dagger \rightarrow S^+ f^\
 although correct leads to problems with the spectral weight conservation because
 $S^+$ and $S^-$ don't commute. Instead the representation $d^\dagger \rightarrow
 2S^xf^\dagger$ and $d \rightarrow 2S^xf$ is chosen, which is identical on the physical Hilbert
-space and involves commuting slave spin operators. Then the non interacting
-Hamiltonian reads:
-
-.. math::
-   \mathcal{H}_0 = -\sum_m t_m \sum_{<i,j>, \sigma} 4S^x_{im\sigma}S^x_{jm\sigma}(f^\dagger_{im\sigma}f_{jm\sigma} +h.c.)
-   + \sum_{im\sigma}(\epsilon_m - \mu)f^\dagger_{im\sigma}f_{im\sigma}
-
+space and involves commuting slave spin operators.
 
 The constrain is treated on average using a static and
-site, orbital and particle independent Lagrange multiplier $\lambda$.
+site, orbital and particle independent Lagrange multiplier $\lambda_{im\sigma}$.
 Then the Hamiltonian reads:
 
 
 .. math:: \mathcal{H} = &\frac{U}{2} \sum_i \left( \sum_{m\sigma} S^z_{im\sigma} \right)^2 \\
    &-\sum_m t_m \sum_{<i,j>, \sigma} 4S^x_{im\sigma}S^x_{jm\sigma}(f^\dagger_{im\sigma}f_{jm\sigma} +h.c.) \\
-   &+\lambda\sum_{im\sigma} \left( S_{im\sigma}^z + \frac{1}{2} - f_{im\sigma}^\dagger f_{im\sigma} \right)
+   &+ \sum_{im\sigma}(\epsilon_m - \mu)f^\dagger_{im\sigma}f_{im\sigma} \\
+   &+\sum_{im\sigma} \lambda_{im\sigma}\left( S_{im\sigma}^z + \frac{1}{2} - f_{im\sigma}^\dagger f_{im\sigma} \right)
 
 Using a Hartree-Fock approximation for the operators $S$ and $f$:
 
@@ -174,11 +183,11 @@ Using a Hartree-Fock approximation for the operators $S$ and $f$:
 it is then possible to decouple the Hamiltonian into two effective ones:
 
 .. math:: \mathcal{H}^f_{eff} = &-\sum_m t_m^{eff} \sum_{<i,j>, \sigma} (f^\dagger_{im\sigma}f_{jm\sigma} +h.c.) \\
-   &-\sum_{im\sigma} \lambda_m f_{im\sigma}^\dagger f_{im\sigma}
+   &+\sum_{im\sigma} (\epsilon_m - \mu - \lambda_{im\sigma}) f_{im\sigma}^\dagger f_{im\sigma}
    :label: hamileff_fermion
 
 .. math:: \mathcal{H}^S_{eff} = &-\sum_m 4J^{eff}_m \sum_{<i,j>, \sigma} S^x_{im\sigma}S^x_{jm\sigma} \\
-   &+\sum_{im\sigma} \lambda_m \left( S_{im\sigma}^z + \frac{1}{2} \right)
+   &+\sum_{im\sigma} \lambda_{im\sigma} \left( S_{im\sigma}^z + \frac{1}{2} \right)
    +\frac{U}{2} \sum_i \left( \sum_{m\sigma} S^z_{im\sigma} \right)^2
    :label: hamileff_spin
 
@@ -198,23 +207,25 @@ solution is well known. For the slave spin hamiltonian, it can be treated
 in a single-site using the Weiss mean field approximation.
 
 .. math:: \mathcal{H}_s = &\sum_{m\sigma} 2h_mS^x_{m\sigma}
-   +\sum_{m\sigma} \lambda_m \left( S_{m\sigma}^z + \frac{1}{2} \right)
+   +\sum_{m\sigma} \lambda_{m\sigma} \left( S_{m\sigma}^z + \frac{1}{2} \right)
    +\frac{U}{2} \left( \sum_{m\sigma} S^z_{m\sigma} \right)^2
    :label: hamil_spin_meanfield
 
 
 Here the mean field $h_m$ has to be determined self-consistently from:
 
-.. math:: h
-   _m = -2zJ^{eff}_m<S^x_{m\sigma}> = 4<S^x_{m\sigma}>\frac{1}{N_s}\sum_k \epsilon_{km}<f^\dagger_{km\sigma}f_{km\sigma}>
+.. math::
+    h_m \equiv -2zJ^{eff}_m<S^x_{m\sigma}> = 4<S^x_{m\sigma}>\frac{1}{N_s}\sum_k \epsilon_{km}<f^\dagger_{km\sigma}f_{km\sigma}>
+    :label: mean_field
 
-where $z$ is the coordination number, $\epsilon_{km}=-t_m\sum_{\{\vec{a}\}}e^{-i\vec{k}\cdot\vec{a}}$
+$z$ is the coordination number, $\epsilon_{km}=-t_m\sum_{\{\vec{a}\}}e^{-i\vec{k}\cdot\vec{a}}$
 with $\{\vec{a}\}$ the set of vectors to the nearest neighbors
 
 The effective fermion hamiltonian is
 
 .. math:: \mathcal{H}^f_{eff} = &\sum_{km\sigma} (-t_m^{eff} \sum_{\{\vec{a}\}} e^{-i\vec{k}\cdot\vec{a}} - \lambda_m) f^\dagger_{km\sigma}f_{km\sigma} \\
-   &=\sum_{km\sigma} (Z_m\epsilon_{mk} - \lambda_m) f^\dagger_{km\sigma}f_{km\sigma}
+   &=\sum_{km\sigma} (Z_m\epsilon_{mk} + \epsilon_m - \mu - \lambda_{m\sigma}) f^\dagger_{km\sigma}f_{km\sigma}
+   :label: 1site_quasipartH
 
 where $Z_m=4<S^x_{im\sigma}>^2$ is the quasiparticle weight.
 
@@ -229,35 +240,102 @@ In the ordered spin basis $\{\ket{\uparrow\uparrow}, \ket{\uparrow\downarrow}, \
 .. math::
    S^x_{\downarrow} = \frac{1}{2} \left[\begin{smallmatrix}0 & 1 & 0 & 0\\1 & 0 & 0 & 0\\0 & 0 & 0 & 1\\0 & 0 & 1 & 0\end{smallmatrix}\right]
 
+As seen in equations :eq:`Hubbard_multiorb`
+there is no hybridization between bands, hopping preserves then the orbital
+quantum number.
+When treating the system within a local mean field, in absence of hybridization
+the $\vec{k}$ dependence enters the problem only through each band dispersion
+as seen in equations :eq:`mean_field`, :eq:`1site_quasipartH`. Sums
+over momenta can thus be replaced by integrals over the energy weighted by the
+density of states $D(\epsilon)$, which is specific to the
+lattice geometry and dimension. For this work, as commonly employed in the
+literature, the Bethe lattice will be used. It has a very simple semi-circular
+form of the density of states:
+
+.. math::
+    D(\epsilon) = \frac{1}{2 \pi t^{2}} \sqrt{4 t^{2} - \epsilon^{2}}
+    :label: bethe_dos
+
+
+and allows to simplify calculations in a great amount. Here $t$ is the
+hopping amplitude and the half-bandwidth is $D=2t$, which is set as
+the energy unit throughout this work. It is known moreover that the Bethe
+lattice
+well portrays the salient physical properties of the Mott-Hubbard transition and
+it has immediate connection with the dynamical mean field
+theory [Georges1996]_, which is exact in the infinite dimensions limit
+and which we intend to implement in future
+work.
+
+The mean field in equation :eq:`mean_field` is then simplified into:
+
+.. math::
+    h_{m\sigma} = \langle O_{m\sigma} \rangle \int_{-\infty}^\infty
+    \epsilon D(\epsilon)  n_F(Z_{m\sigma}\epsilon + \epsilon_m - \mu -
+    \lambda_{m\sigma}) d\epsilon
+    :label: DOS_meanfield
+
+where $n_F$ is the Fermi distribution function. In the same fashion to estimate
+the average particle number per site, orbital and spin, one easily uses the
+relation:
+
+.. math::
+    \langle n_{im\sigma}\rangle  = \int_{-\infty}^\infty
+    D(\epsilon)  n_F(Z_{m\sigma}\epsilon + \epsilon_m - \mu -
+    \lambda_{m\sigma}) d\epsilon
+    :label: DOS_avgparticles
+
+
+In this work all calculations are done at zero temperature,
+where the Fermi distribution can be approximated into a step function. That
+implies for equations :eq:`DOS_avgparticles` and :eq:`DOS_meanfield`
+that:
+
+.. math::
+    Z_{m\sigma}\epsilon_{F_0}(n) = - \epsilon_m + \mu + \lambda_{m\sigma}
+    :label: fermi_energy
+
+in which $\epsilon_{F_0}$ is the Fermi energy at zero temperature for the
+non-interacting system such that
+
+.. math::
+    \int_{-\infty}^{\epsilon_{F_0}} D(\epsilon)  d\epsilon=n
+    :label: fermi_energy_cut
+
+This procedure of defining a zero temperature
+non-interacting Fermi energy($U=0$ and thus $Z=1$) allows to keep the particle
+population fixed when correlations are included into the
+problem [Yu2011]_ [Florens2004]_.
+
 .. plot::
 
-   from slaveparticles.plotter import calc_quasiparticle_weight, plot_quasiparticle_weight
-   import numpy as np
-   from matplotlib.pyplot import ylim, xlim, plot, subplots, xlabel,\
-   ylabel, title, legend, imshow, colorbar, tight_layout
-   from slaveparticles import Spinon, orbital_energies
-   output =[]
-   N=1
-   n=0.5
-   for end in [3.45, 5.15, 6.85, 8.55]:
-     Uspan = np.arange(0,end,0.1)
-     sl = Spinon(slaves=2*N, orbitals=N, avg_particles=2*N*n,
-                  hopping=[0.5]*2*N, populations=[n]*2*N)
-     [zet, lam, mu], hlog, mean_f = calc_quasiparticle_weight(sl, Uspan, [0.])
-     output.append([zet,Uspan])
-     N+=1
+    from __future__ import division, absolute_import, print_function
+    import slaveparticles.utils.plotter as ssplt
+    import numpy as np
+    import matplotlib.pyplot as plt
 
-   for (z,u),c in zip(output,range(1,5)):
-     plot(u,z[:,0],label='\$N={}\$'.format(str(c)))
-   legend(loc=0)
-   ylim([0,1.05])
-   xlabel('\$U/D\$', fontsize=15)
-   ylabel('\$Z\$', fontsize=15)
-   tight_layout()
+    #Degenerate bands
+    def plot_degbandshalffill():
+        """Plot of Quasiparticle weight for degenerate
+        half-filled bands, showing the Mott transition"""
+        ulim = [3.45, 5.15, 6.85, 8.55]
+        bands = range(1, 5)
+        for band, u_int in zip(bands, ulim):
+            name = 'Z_half_'+str(band)+'band'
+            dop = [0.5]
+            data = ssplt.calc_z(band, dop, np.arange(0, u_int, 0.1),0., name)
+            plt.plot(data['u_int'], data['zeta'][0, :, 0], label='$N={}$'.format(str(band)))
 
-The previous introduction to the slave spins, slave particle formulation, to
-treat the Hubbard Hamiltonian and deal with the quartic term that deals with
-the correlations is only valid in the simplified case of degenerate orbitals at
+        ssplt.label_saves('Z_half_multiorb.png')
+
+    plot_degbandshalffill()
+
+Introcing dopping
+-----------------
+
+The previous introduction to the slave spins treats the Hubbard Hamiltonian
+and deals with the quartic term that deals with the correlations. But it is
+only valid in the simplified case of degenerate orbitals at
 half-filling. When aiming to introduce doping, a more elaborate formulation is
 required. The fact is that the Spin Hamiltonian is unable to manage doping
 cases as previously formulated, since it is always populated by 2 spin which
@@ -312,16 +390,10 @@ in order to give rise to the most physical approximation scheme, by imposing
 that it correctly reproduces solvable limits of the problem such as the
 non-interacting limit.
 
-The Hubbard Model
------------------
-
-Through this work all developments are performed around the Hubbard
-Hamiltonian.
-
 The non-interacting limit
 '''''''''''''''''''''''''
 
-Starting with a free Hamiltonian that only includes the kinetic energy term and
+Starting with a Tight Binding Hamiltonian that only includes the kinetic energy term and
 a contribution from the chemical potential to control the doping, the new
 operators are introduced. Treating a single orbital case of atoms in a lattice.
 
@@ -375,6 +447,7 @@ Where the mean field $h_\sigma$
 
 .. math:: h_\sigma = \langle O_\sigma \rangle \frac{1}{N_s} \sum_k \epsilon_k
    \langle f^\dagger_{k\sigma}f_{k\sigma} \rangle
+
 
 Choosing the gauge c
 """"""""""""""""""""
@@ -433,5 +506,33 @@ expression for $c$ is found to be independent of the mean field $h$:
 
 .. math:: c = \frac{1}{\sqrt{n(1-n)}} -1
 
+.. plot::
 
+    from __future__ import division, absolute_import, print_function
+    import slaveparticles.utils.plotter as ssplt
+    import numpy as np
+    import matplotlib.pyplot as plt
+
+    #band dop
+    def plot_dop(bands, int_max, dop, hund_cu, name):
+        """Plot of Quasiparticle weight for N degenerate bands
+        under selected doping shows transition only at half-fill
+        the rest are metallic states"""
+        data = ssplt.calc_z(bands, dop, np.arange(0, int_max, 0.1), hund_cu, name)
+        ssplt.plot_curves_z(data, name)
+
+    #band dop_phasediag
+    def plot_dop_phase(bands, int_max, hund_cu):
+        """Phase plot of Quasiparticle weight for N degenerate bands
+        under doping shows transition only at interger filling
+        the rest are metallic states"""
+        name = 'Z_dop_phase_'+str(bands)+'bands_U'+str(int_max)+'J'+str(hund_cu)
+        dop = np.sort(np.hstack((np.linspace(0.01,0.99,50),
+                        np.arange(1./2./bands, 1, 1/2/bands))))
+        data = ssplt.calc_z(bands, dop, np.arange(0, int_max, 0.1), hund_cu, name)
+
+        ssplt.surf_z(data, name)
+
+    plot_dop(1, 4.6, [0.5, 0.499, 0.495, 0.49, 0.45, 0.4, 0.2, 0.1], 0., 'Z_dop_1orb')
+    plot_dop_phase(2, 6, 0.)
 
