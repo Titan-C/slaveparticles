@@ -21,7 +21,7 @@ class PyTest(TestCommand):
         sys.exit(errno)
 
 setup(
-    name="Slave Particles",
+    name="slaveparticles",
     description="Educative code on Slave Particles",
     version="0.2",
     packages=find_packages(),
@@ -30,8 +30,8 @@ setup(
     author_email='najera.oscar@gmail.com',
     license="GNU General Public License v3 (GPLv3)",
 
-    install_requires=['numpy', 'scipy', 'Sphinx', 'matplotlib'],
-
+    install_requires=['numpy', 'scipy', 'matplotlib'],
+    setup_requires=['Sphinx'],
     tests_require=['pytest', 'pytest-cov'],
     cmdclass={'test': PyTest},
 )
