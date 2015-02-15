@@ -6,6 +6,7 @@ Installing packages on Slave Particles Mean Field Theories
 from setuptools import setup, find_packages
 from setuptools.command.test import test as TestCommand
 import sys
+import slaveparticles
 
 class PyTest(TestCommand):
     """Test class to do test coverage analysis"""
@@ -20,10 +21,16 @@ class PyTest(TestCommand):
         errno = pytest.main(self.test_args)
         sys.exit(errno)
 
+
+with open('README.rst') as f:
+    long_description = f.read()
+
+
 setup(
     name="slaveparticles",
     description="Educative code on Slave Particles",
-    version="0.2",
+    long_description=long_description,
+    version=slaveparticles.__version__,
     packages=find_packages(),
     url="https://github.com/Titan-C/slaveparticles",
     author="Óscar Nájera",
