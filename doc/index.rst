@@ -15,9 +15,8 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-   slavespin.rst
-
-.. automodule:: slaveparticles
+   slavespin
+   auto_examples/index
 
 
 Indices and tables

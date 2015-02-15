@@ -1,19 +1,17 @@
 # -*- coding: utf-8 -*-
 """
-Created on Fri Mar  7 10:47:44 2014
+==========================================
+Reconstructing a Coulomb occupation ladder
+==========================================
 
-@author: Oscar Najera
-
-Reproduction of results Thesis Luca de'Medici
+Filling of the 2 degenerate orbitals of an atom in function of the chemical
+potential
 """
-
-#Test1 Single atom 2 orbitals 4 electrons, cast independent electron spin and
-#orbital into same variabetale type, then 2N=4
 
 from scipy.special import binom
 from scipy.optimize import fsolve
-from pylab import linspace, exp, sum, zeros
-from pylab import plot, xlabel, ylabel, title, legend, tight_layout
+from numpy import linspace, exp, sum, zeros
+from matplotlib.pyplot import plot, xlabel, ylabel, title, legend, tight_layout
 
 #exact case
 def spectrum(mu, orbitals, U, beta, Q):
@@ -55,5 +53,5 @@ def pressision_try(orbitals, U, beta, step):
     plot(mu2, 2*orbitals*fermi_dist(-(mu2+lam2), beta), label='Test guess')
     legend(loc=0)
 
-if __name__ == "__main__":
+if __name__ == "gallery":
     mu, lam = main(2, 50, 2, 200)

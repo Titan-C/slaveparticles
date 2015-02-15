@@ -121,7 +121,7 @@ As shown in the next plot, the slave spin approximation is capable of
 recovering the coulomb occupation ladder, for the isolated atom with degenerate
 fermions in spin and orbital. The approximation works best around half-filling.
 
-.. plot::  degenerate_2orb_filling.py
+.. plot::  ../examples/spins/plot_deg_2orb_fill.py
 
 
 Case: The lattice model - The Hubbard Model
@@ -307,31 +307,11 @@ non-interacting Fermi energy($U=0$ and thus $Z=1$) allows to keep the particle
 population fixed when correlations are included into the
 problem [Yu2011]_ [Florens2004]_.
 
-.. plot::
+.. plot::  ../examples/spins/plot_z_half_multiorb.py
 
-    from __future__ import division, absolute_import, print_function
-    import slaveparticles.utils.plotter as ssplt
-    import numpy as np
-    import matplotlib.pyplot as plt
-
-    #Degenerate bands
-    def plot_degbandshalffill():
-        """Plot of Quasiparticle weight for degenerate
-        half-filled bands, showing the Mott transition"""
-        ulim = [3.45, 5.15, 6.85, 8.55]
-        bands = range(1, 5)
-        for band, u_int in zip(bands, ulim):
-            name = 'Z_half_'+str(band)+'band'
-            dop = [0.5]
-            data = ssplt.calc_z(band, dop, np.arange(0, u_int, 0.1),0., name)
-            plt.plot(data['u_int'], data['zeta'][0, :, 0], label='N={}'.format(str(band)))
-
-        ssplt.label_saves('Z_half_multiorb.png')
-
-    plot_degbandshalffill()
 
 Introducing doping
------------------
+------------------
 
 The previous introduction to the slave spins treats the Hubbard Hamiltonian
 and deals with the quartic term that deals with the correlations. But it is
@@ -506,35 +486,11 @@ expression for $c$ is found to be independent of the mean field $h$:
 
 .. math:: c = \frac{1}{\sqrt{n(1-n)}} -1
 
-.. plot::
+.. plot::  ../examples/spins/plot_z_dop_1orb.py
 
-    from __future__ import division, absolute_import, print_function
-    import slaveparticles.utils.plotter as ssplt
-    import numpy as np
-    import matplotlib.pyplot as plt
+.. plot::  ../examples/spins/plot_z_dop_2orb.py
 
-    #band dop
-    def plot_dop(bands, int_max, dop, hund_cu, name):
-        """Plot of Quasiparticle weight for N degenerate bands
-        under selected doping shows transition only at half-fill
-        the rest are metallic states"""
-        data = ssplt.calc_z(bands, dop, np.arange(0, int_max, 0.1), hund_cu, name)
-        ssplt.plot_curves_z(data, name)
 
-    #band dop_phasediag
-    def plot_dop_phase(bands, int_max, hund_cu):
-        """Phase plot of Quasiparticle weight for N degenerate bands
-        under doping shows transition only at integer filling
-        the rest are metallic states"""
-        name = 'Z_dop_phase_'+str(bands)+'bands_U'+str(int_max)+'J'+str(hund_cu)
-        dop = np.sort(np.hstack((np.linspace(0.01,0.99,50),
-                        np.arange(1./2./bands, 1, 1/2/bands))))
-        data = ssplt.calc_z(bands, dop, np.arange(0, int_max, 0.1), hund_cu, name)
-
-        ssplt.surf_z(data, name)
-
-    plot_dop(1, 4.6, [0.5, 0.499, 0.495, 0.49, 0.45, 0.4, 0.2, 0.1], 0., 'Z_dop_1orb')
-    plot_dop_phase(2, 6, 0.)
 
 Hund's coupling
 ---------------

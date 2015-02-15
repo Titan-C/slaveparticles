@@ -204,7 +204,7 @@ class Spinon(object):
 
     def selfconsistency(self, U_inter, J_coup, mean_field_prev=None):
         """Iterates over the hamiltonian to get the stable selfcosistent one"""
-        if mean_field_prev == None:
+        if mean_field_prev is None:
             mean_field_prev = np.array([self.param['ekin']]*2)
         hlog = [mean_field_prev]
 

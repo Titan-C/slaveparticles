@@ -16,6 +16,7 @@ import sys
 import os
 from datetime import date
 import sphinxgallery
+import slaveparticles
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -65,7 +66,7 @@ copyright = u'2014-%s, Óscar Nájera' % date.today().year
 # built documents.
 #
 # The short X.Y version.
-version = slaveparticles.__version__ + '-git'
+version = slaveparticles.__version__
 # The full version, including alpha/beta/rc tags.
 release = slaveparticles.__version__ + '-git'
 
