@@ -1,8 +1,14 @@
 # -*- coding: utf-8 -*-
 """
-@author: Óscar Nájera
-Created on Wed Jun 18 09:23:13 2014
+===
+oeu
+===
+
+#@author: Óscar Nájera
+#Created on Wed Sep 24 14:55:15 2014
+eu
 """
+
 from __future__ import division, absolute_import, print_function
 
 import slavespins.storage as st

@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
 """
+===============================================
+Effect of crystalfield field degeneracy lifting
+===============================================
+
 @author: Óscar Nájera
 Created on Wed Sep 24 14:55:15 2014
 """
