@@ -46,8 +46,9 @@ def gf_lehmann(eig_e, eig_states, d_dag, beta, omega):
        continuation"""
     zet = partition_func(beta, eig_e)
     G = 0
-    for i in range(len(eig_e)):
-        for j in range(len(eig_e)):
+    N = eig_e.size
+    for i in range(N):
+        for j in range(N):
             G += np.dot(eig_states[:, j].T, d_dag.dot(eig_states[:, i]))**2 * \
                        (np.exp(-beta*eig_e[i]) + np.exp(-beta*eig_e[j])) / \
                        (omega + eig_e[i] - eig_e[j])
