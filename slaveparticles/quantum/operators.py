@@ -44,14 +44,16 @@ def gf_lehmann(eig_e, eig_states, d_dag, beta, omega):
     """Outputs the lehmann representation of the greens function
        omega has to be given, as matsubara frequencies or their analitical
        continuation"""
-    zet = partition_func(beta, eig_e)
-    G = 0
+    ew = np.exp(-beta*eig_e)
+    zet = ew.sum()
+    G = np.zeros_like(omega)
+    tmat = np.dot(eig_states.T, d_dag.dot(eig_states))**2
+
     N = eig_e.size
     for i in range(N):
         for j in range(N):
-            G += np.dot(eig_states[:, j].T, d_dag.dot(eig_states[:, i]))**2 * \
-                       (np.exp(-beta*eig_e[i]) + np.exp(-beta*eig_e[j])) / \
-                       (omega + eig_e[i] - eig_e[j])
+            G +=  tmat[i, j]* (ew[i] + ew[j]) / \
+                  (omega + eig_e[j] - eig_e[i])
     return G / zet
 
 
