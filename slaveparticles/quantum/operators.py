@@ -48,12 +48,13 @@ def gf_lehmann(eig_e, eig_states, d_dag, beta, omega):
     zet = ew.sum()
     G = np.zeros_like(omega)
     tmat = np.dot(eig_states.T, d_dag.dot(eig_states))**2
+    tmat *= np.add.outer(ew, ew)
+    gap = np.add.outer(-eig_e, eig_e)
 
     N = eig_e.size
     for i in range(N):
         for j in range(N):
-            G +=  tmat[i, j]* (ew[i] + ew[j]) / \
-                  (omega + eig_e[j] - eig_e[i])
+            G += tmat[i, j] / (omega + gap[i, j])
     return G / zet
 
 
