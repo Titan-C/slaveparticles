@@ -6,7 +6,7 @@ Created on Wed Apr  2 16:49:03 2014
 from __future__ import division, absolute_import, print_function
 import numpy as np
 import scipy.linalg as LA
-from slaveparticles.quantum.spinmatrices import *
+from itertools import product
 
 
 def fermi_dist(energy, beta):
@@ -40,21 +40,25 @@ def diagonalize(operator):
     return eig_values, eig_vecs
 
 
-def gf_lehmann(eig_e, eig_states, d_dag, beta, omega):
+def gf_lehmann(eig_e, eig_states, d_dag, beta, omega, d=None):
     """Outputs the lehmann representation of the greens function
-       omega has to be given, as matsubara frequencies or their analitical
-       continuation"""
+       omega has to be given, as matsubara or real frequencies"""
+
     ew = np.exp(-beta*eig_e)
     zet = ew.sum()
     G = np.zeros_like(omega)
-    tmat = np.dot(eig_states.T, d_dag.dot(eig_states))**2
+    basis_create = np.dot(eig_states.T, d_dag.dot(eig_states))
+    if d is None:
+        tmat = np.square(basis_create)
+    else:
+        tmat = np.dot(eig_states.T, d.dot(eig_states))*basis_create
+
     tmat *= np.add.outer(ew, ew)
     gap = np.add.outer(-eig_e, eig_e)
 
     N = eig_e.size
-    for i in range(N):
-        for j in range(N):
-            G += tmat[i, j] / (omega + gap[i, j])
+    for i, j in product(range(N), range(N)):
+        G += tmat[i, j] / (omega + gap[i, j])
     return G / zet
 
 
