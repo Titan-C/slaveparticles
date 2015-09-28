@@ -6,11 +6,12 @@ Created on Wed Jun 18 13:05:04 2014
 from __future__ import division, absolute_import, print_function
 import numpy as np
 from scipy.optimize import root
-
 from slaveparticles.quantum.dos import bethe_findfill_zeroT, \
      bethe_find_crystalfield, bethe_ekin_zeroT, bethe_filling_zeroT
-from slaveparticles.quantum.operators import diagonalize, expected_value, \
-    spin_gen, spin_z
+from slaveparticles.quantum.operators import diagonalize, expected_value
+from slaveparticles.quantum.spinmatrices import spin_gen, spin_z
+from scipy.sparse import csr_matrix
+
 
 # Fermionic part of the slave spin formulation
 def orbital_energies(param, quasiparticle):
@@ -20,6 +21,7 @@ def orbital_energies(param, quasiparticle):
 
     return param['lambda'] + quasiparticle * param['orbital_e_free']
 
+
 def fermion_avg(efermi, norm_hopping, func):
     """calcules for every slave it's average over the desired observable"""
     if func == 'ekin':
@@ -27,8 +29,8 @@ def fermion_avg(efermi, norm_hopping, func):
     elif func == 'ocupation':
         func = bethe_filling_zeroT
 
-    return np.asarray([func(ef, tz) for ef, tz in \
-            zip(efermi, norm_hopping)])
+    return np.asarray([func(ef, tz) for ef, tz in zip(efermi, norm_hopping)])
+
 
 # Spin form of the Slave spin formulation
 def estimate_gauge(density):
@@ -36,7 +38,7 @@ def estimate_gauge(density):
        case of single site"""
     return 1/np.sqrt(density*(1-density)) - 1
 
-from scipy.sparse import csr_matrix
+
 def spinflipandhop(slaves):
     """Calculates the interaction term of a spin flip and pair hopping"""
 
@@ -47,13 +49,14 @@ def spinflipandhop(slaves):
     orbitals = slaves//2
     for n in range(orbitals):
         for m in range(n+1, orbitals):
-            sfh = Sup[2*n  ] * Sdw[2*n+ 1] * Sup[2*m + 1] * Sdw[2*m  ] + sfh
-            sfh = Sup[2*n+1] * Sdw[2*n   ] * Sup[2*m    ] * Sdw[2*m+1] + sfh
+            sfh = Sup[2*n  ] * Sdw[2*n + 1] * Sup[2*m + 1] * Sdw[2*m  ] + sfh
+            sfh = Sup[2*n+1] * Sdw[2*n    ] * Sup[2*m    ] * Sdw[2*m+1] + sfh
 
-            sfh = Sup[2*n] * Sup[2*n+ 1] * Sdw[2*m] * Sdw[2*m+1] + sfh
-            sfh = Sup[2*m] * Sup[2*m+ 1] * Sdw[2*n] * Sdw[2*n+1] + sfh
+            sfh = Sup[2*n] * Sup[2*n + 1] * Sdw[2*m] * Sdw[2*m+1] + sfh
+            sfh = Sup[2*m] * Sup[2*m + 1] * Sdw[2*n] * Sdw[2*n+1] + sfh
 
     return sfh
+
 
 def spin_z_op(param, oper):
     """Generates the required Sz operators, given the system parameter setup
@@ -61,18 +64,20 @@ def spin_z_op(param, oper):
     slaves = param['slaves']
     oper['Sz'] = np.array([spin_z(slaves, spin) for spin in range(slaves)])
     oper['Sz+1/2'] = oper['Sz'] + 0.5*np.eye(2**slaves)
-    oper['sumSz2'] = oper['Sz'].sum(axis=0)**2 #because Sz is diagonal
+    oper['sumSz2'] = oper['Sz'].sum(axis=0)**2  # because Sz is diagonal
     Sz_mat_shape = oper['Sz'].reshape(param['orbitals'], 2, 2**slaves, 2**slaves)
     oper['sumSz-sp2'] = (Sz_mat_shape.sum(axis=1)**2).sum(axis=0)
     oper['sumSz-or2'] = (Sz_mat_shape.sum(axis=0)**2).sum(axis=0)
+
 
 def spin_gen_op(oper, gauge):
     """Generates the generic spin matrices for the system"""
     slaves = len(gauge)
     oper['O'] = np.array([spin_gen(slaves, i, c) for i, c in enumerate(gauge)])
-    oper['O_d']  = np.transpose(oper['O'], (0, 2, 1))
+    oper['O_d'] = np.transpose(oper['O'], (0, 2, 1))
     oper['O_dO'] = np.einsum('...ij,...jk->...ik', oper['O_d'], oper['O'])
     oper['Sfliphop'] = spinflipandhop(slaves)
+
 
 class Spinon(object):
     """Holds the matrix operators for a single site slave-spin system"""
@@ -95,7 +100,7 @@ class Spinon(object):
         """
         self.param = {'slaves': 2,
                       'orbitals': 1,
-#                      'avg_particles': 1, MAKE SUM OF POPULATIONS
+                      # 'avg_particles': 1, MAKE SUM OF POPULATIONS
                       'populations': 0.5*np.ones(2),
                       'hopping': 0.5*np.ones(2),
                       'orbital_e': np.zeros(2),
@@ -114,21 +119,22 @@ class Spinon(object):
         spin_z_op(self.param, self.oper)
 
         self.selfconsistency(0, 0)
-        self.param['orbital_e_free'] = bethe_find_crystalfield(\
-                            self.param['populations'], self.param['hopping'])
-        self.param['orbital_e_shift']=orbital_energies(self.param,self.quasiparticle_weight())
+        self.param['orbital_e_free'] = bethe_find_crystalfield(
+            self.param['populations'], self.param['hopping'])
+        self.param['orbital_e_shift'] = orbital_energies(self.param,
+                                                         self.quasiparticle_weight())
 
     def set_filling(self, populations):
         """Sets the orbital enenergies for on the reference of the free case.
           By setting the desired local populations on every orbital.
           Then generate the necesary operators to respect such configuraion"""
-        populations=np.asarray(populations)
+        populations = np.asarray(populations)
 #
 #        self.param['orbital_e'] -= bethe_findfill_zeroT( \
 #                                        self.param['avg_particles'],
 #                                        self.param['orbital_e'],
 #                                        self.param['hopping'])
-        efermi = - bethe_find_crystalfield(\
+        efermi = - bethe_find_crystalfield(
                             populations, self.param['hopping'])
         self.param['populations'] = populations
 #        fermion_avg(efermi, self.param['hopping'], 'ocupation')
@@ -179,7 +185,6 @@ class Spinon(object):
 
         return Hint
 
-
     def expected(self, observable, beta=1e5):
         """Wrapper to the expected_value function to fix the eigenbasis"""
         return expected_value(observable,
@@ -190,7 +195,6 @@ class Spinon(object):
     def quasiparticle_weight(self):
         """Calculates quasiparticle weight"""
         return np.array([self.expected(op)**2 for op in self.oper['O']])
-
 
     def mean_field(self):
         """Calculates mean field"""
@@ -217,10 +221,10 @@ class Spinon(object):
             else:
                 res = root(self.restriction, self.param['lambda'], (hlog[-1]))#, method='lm')
                 if not res.success:
-                    res.x = res.x *0.5 + 0.5*self.param['lambda']
-                    self.update_H(self.mean_field()*0.5 +0.5*hlog[-1], res.x)
+                    res.x = res.x * 0.5 + 0.5*self.param['lambda']
+                    self.update_H(self.mean_field()*0.5 + 0.5*hlog[-1], res.x)
                     print('fail', self.param['populations'][3:5])
-                if (self.quasiparticle_weight() <0.001 ).all():
+                if (self.quasiparticle_weight() < 0.001).all():
                     return hlog
                 self.param['lambda'] = res.x
 
