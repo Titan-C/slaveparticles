@@ -167,23 +167,23 @@ class Spinon(object):
 
     def spin_hamiltonian(self, h, l):
         """Constructs the single site spin Hamiltonian"""
-        H_s  = np.einsum('i,ijk', h[1], self.oper['O'])
-        H_s += np.einsum('i,ijk', h[0], self.oper['O_d'])
-        H_s += np.einsum('i,ijk', l, self.oper['Sz+1/2'])
+        h_spin  = np.einsum('i,ijk', h[1], self.oper['O'])
+        h_spin += np.einsum('i,ijk', h[0], self.oper['O_d'])
+        h_spin += np.einsum('i,ijk', l, self.oper['Sz+1/2'])
 
-        H_s += self.oper['Hint']
-        return H_s
+        h_spin += self.oper['Hint']
+        return h_spin
 
-    def inter_spin_hamiltonian(self, U_inter, J_coup):
+    def inter_spin_hamiltonian(self, u_int, J_coup):
         """Calculates the interaction Hamiltonian. The Hund coupling is a
            fraction of the coulom interaction"""
-        J_coup *= U_inter
-        Hint  = (U_inter - 2*J_coup)/2.*self.oper['sumSz2']
-        Hint += J_coup*self.oper['sumSz-sp2']
-        Hint -= J_coup/2.*self.oper['sumSz-or2']
-        Hint -= J_coup*self.oper['Sfliphop']
+        J_coup *= u_int
+        h_int  = (u_int - 2*J_coup)/2.*self.oper['sumSz2']
+        h_int += J_coup*self.oper['sumSz-sp2']
+        h_int -= J_coup/2.*self.oper['sumSz-or2']
+        h_int -= J_coup*self.oper['Sfliphop']
 
-        return Hint
+        return h_int
 
     def expected(self, observable, beta=1e5):
         """Wrapper to the expected_value function to fix the eigenbasis"""
@@ -206,13 +206,13 @@ class Spinon(object):
 
         return np.array(mean_field)
 
-    def selfconsistency(self, U_inter, J_coup, mean_field_prev=None):
+    def selfconsistency(self, u_int, J_coup, mean_field_prev=None):
         """Iterates over the hamiltonian to get the stable selfcosistent one"""
         if mean_field_prev is None:
             mean_field_prev = np.array([self.param['ekin']]*2)
         hlog = [mean_field_prev]
 
-        self.oper['Hint'] = self.inter_spin_hamiltonian(U_inter, J_coup)
+        self.oper['Hint'] = self.inter_spin_hamiltonian(u_int, J_coup)
         converging = True
         half_fill = (self.param['populations'] == 0.5).all()
         while converging:
