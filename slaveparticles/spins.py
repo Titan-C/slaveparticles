@@ -45,15 +45,15 @@ def spinflipandhop(slaves):
     Sdw = [csr_matrix(spin_gen(slaves, i, 0)) for i in range(slaves)]
     Sup = [mat.T for mat in Sdw]
 
-    sfh = 0.
+    sfh = np.zeros_like(Sup[0])
     orbitals = slaves//2
     for n in range(orbitals):
         for m in range(n+1, orbitals):
-            sfh = Sup[2*n  ] * Sdw[2*n + 1] * Sup[2*m + 1] * Sdw[2*m  ] + sfh
-            sfh = Sup[2*n+1] * Sdw[2*n    ] * Sup[2*m    ] * Sdw[2*m+1] + sfh
+            sfh += Sup[2*n  ] * Sdw[2*n + 1] * Sup[2*m + 1] * Sdw[2*m  ]
+            sfh += Sup[2*n+1] * Sdw[2*n    ] * Sup[2*m    ] * Sdw[2*m+1]
 
-            sfh = Sup[2*n] * Sup[2*n + 1] * Sdw[2*m] * Sdw[2*m+1] + sfh
-            sfh = Sup[2*m] * Sup[2*m + 1] * Sdw[2*n] * Sdw[2*n+1] + sfh
+            sfh += Sup[2*n] * Sup[2*n + 1] * Sdw[2*m] * Sdw[2*m+1]
+            sfh += Sup[2*m] * Sup[2*m + 1] * Sdw[2*n] * Sdw[2*n+1]
 
     return sfh
 

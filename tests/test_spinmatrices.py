@@ -4,17 +4,19 @@
 Created on Wed Jun  4 14:37:13 2014
 """
 from __future__ import division, absolute_import, print_function
-import numpy as np
 from scipy import linalg as LA
+import numpy as np
 import slaveparticles.quantum.operators as qo
+import slaveparticles.quantum.spinmatrices as sm
 import slaveparticles.spins as ss
+
 
 def test_spinmatrix():
     """Verifies spin matrices commute"""
     orbitals = 3
-    Sx = [qo.spin_x(orbitals*2, spin) for spin in range(orbitals*2)]
-    Sy = [qo.spin_y(orbitals*2, spin) for spin in range(orbitals*2)]
-    Sz = [qo.spin_z(orbitals*2, spin) for spin in range(orbitals*2)]
+    Sx = [sm.spin_x(orbitals*2, spin) for spin in range(orbitals*2)]
+    Sy = [sm.spin_y(orbitals*2, spin) for spin in range(orbitals*2)]
+    Sz = [sm.spin_z(orbitals*2, spin) for spin in range(orbitals*2)]
 
     for S in Sx + Sy + Sz:
         assert (np.dot(S, S) - 1/4.*np.eye(4**orbitals) < 5e-16).all()
@@ -41,6 +43,7 @@ def test_spinmatrix():
 
     for op in sum(Sx) + sum(Sz):
         assert isinstance(op, np.ndarray)
+
 
 def test_spinflipandhop():
     """Test the operator has the required amount of non-zero entries"""
