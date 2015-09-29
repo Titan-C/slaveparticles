@@ -51,7 +51,7 @@ def gf_lehmann(eig_e, eig_states, d_dag, beta, omega, d=None):
     if d is None:
         tmat = np.square(basis_create)
     else:
-        tmat = np.dot(eig_states.T, d.dot(eig_states))*basis_create
+        tmat = np.dot(eig_states.T, d.T.dot(eig_states))*basis_create
 
     tmat *= np.add.outer(ew, ew)
     gap = np.add.outer(-eig_e, eig_e)

@@ -37,12 +37,26 @@ def test_gf_lehmann(U, mu, beta):
 
     e, v = operators.diagonalize(H.todense())
     g_up = operators.gf_lehmann(e, v, d_up.T, beta, w)
+    g_up_cross = operators.gf_lehmann(e, v, d_up.T, beta, w, d_up)
 
     Z = 1+2*np.exp(beta*(U/2+mu)) + np.exp(2*beta*mu)
     g_up_ref = ((1+np.exp(beta*(U/2+mu)))/(w + mu + U/2.) +
                 (np.exp(beta*(U/2+mu)) + np.exp(2*beta*mu))/(w + mu - U/2.))/Z
 
     assert np.allclose(g_up, g_up_ref)
+    assert np.allclose(g_up_cross, g_up_ref)
+
+def test_gf_lehmann2():
+    """Verifies the lehmann representation of a random Hamiltonian"""
+    w = np.linspace(-1.5, 1.5, 500)
+    d_up = fermion.destruct(6, 0)
+    H = np.random.rand(*d_up.shape)
+    H += H.T
+
+    e, v = operators.diagonalize(H)
+    g_up_diag = operators.gf_lehmann(e, v, d_up.T, 400, w)
+    g_up_cross = operators.gf_lehmann(e, v, d_up.T, 400, w, d_up)
+    assert np.allclose(g_up_diag, g_up_cross)
 
 if __name__ == "__main__":
     pass
