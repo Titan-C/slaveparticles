@@ -9,12 +9,13 @@ slave spin system
 
 import slaveparticles.spins as ss
 import numpy as np
-import scipy.linalg as LA
+
 
 def test_Hamitonian_hermitian():
     """Test if the hamiltonian is hermitian, after bug of transposing operators"""
     sl = ss.Spinon()
     assert (sl.H_s - sl.H_s.T < 5e-14).all()
+
 
 def test_diagonalization():
     """tests if diagonalization states give identity matrix"""
@@ -27,7 +28,7 @@ def test_diagonalization():
     if (abs(h) <= 1.0).all():
         sl.oper['Hint'] = sl.inter_spin_hamiltonian(U, 0.)
         sl.update_H(-0.5*np.ones((2, 6)), np.zeros(6))
-        assert LA.norm(np.dot(sl.eig_states.T, sl.eig_states)-np.eye(64)) < 5e-14
+        assert np.allclose(np.dot(sl.eig_states.T, sl.eig_states), np.eye(64))
 
 
 def test_averager():
