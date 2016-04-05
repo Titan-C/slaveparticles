@@ -11,7 +11,8 @@ from itertools import product
 
 def fermi_dist(energy, beta):
     """ Fermi Dirac distribution"""
-    return 1./(np.exp(beta*energy) + 1)
+    exponent = np.asarray(beta*energy).clip(-600, 600)
+    return 1./(np.exp(exponent) + 1)
 
 
 def partition_func(beta, energies):
@@ -65,7 +66,7 @@ def gf_lehmann(eig_e, eig_states, d_dag, beta, omega, d=None):
 def expected_value(operator, eig_values, eig_states, beta):
     """Calculates the average value of an observable
        it requires that states and operators have the same base"""
-    aux = np.einsum('i,ij,ji', np.exp(-beta*eig_values),
-                    eig_states.T, np.dot(operator, eig_states))
+    aux = np.einsum('i,ji,ji', np.exp(-beta*eig_values),
+                    eig_states, operator.dot(eig_states))
 
     return aux / partition_func(beta, eig_values)
