@@ -12,3 +12,7 @@ Slave Particles
     :target: https://zenodo.org/badge/latestdoi/7020/Titan-C/slaveparticles
 
 Educative code on Slave Particles
+
+The idea in a slave particle scheme is to express the real fermion in terms of
+constrained(slave) auxiliary fields that enlarge the Hilbert space. These
+fields are subject to local restrictions that eliminate nonphysical states.
