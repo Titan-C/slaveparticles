@@ -9,4 +9,7 @@ Slave Particles
     :target: https://pypi.python.org/pypi/slaveparticles/
     :alt: Downloads
 
+.. image:: https://zenodo.org/badge/7020/Titan-C/slaveparticles.svg
+    :target: https://zenodo.org/badge/latestdoi/7020/Titan-C/slaveparticles
+
 Educative code on Slave Particles
