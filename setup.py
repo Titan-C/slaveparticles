@@ -8,15 +8,18 @@ from setuptools.command.test import test as TestCommand
 import sys
 import slaveparticles
 
+
 class PyTest(TestCommand):
     """Test class to do test coverage analysis"""
+
     def finalize_options(self):
         TestCommand.finalize_options(self)
         self.test_args = ['--cov-report', 'term-missing',
                           '--cov', 'slaveparticles', 'tests/']
         self.test_suite = True
+
     def run_tests(self):
-        #import here, cause outside the eggs aren't loaded
+        # import here, cause outside the eggs aren't loaded
         import pytest
         errno = pytest.main(self.test_args)
         sys.exit(errno)
@@ -41,4 +44,11 @@ setup(
     setup_requires=['Sphinx'],
     tests_require=['pytest', 'pytest-cov'],
     cmdclass={'test': PyTest},
+    classifiers=[
+        "Intended Audience :: Developers",
+        "Intended Audience :: Science/Research",
+        "Programming Language :: Python",
+        "Topic :: Scientific / Engineering",
+        "Topic :: Software Development",
+    ]
 )
